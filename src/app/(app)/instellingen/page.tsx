@@ -2,7 +2,9 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getMe } from "@/lib/data";
-import { inviteUser, setLocale, updateDisplayName } from "../actions";
+import { cookies } from "next/headers";
+import { inviteUser, setLocale, setTheme, updateDisplayName } from "../actions";
+import { THEME_COOKIE, THEMES } from "@/lib/theme";
 import { SubmitButton } from "@/components/SubmitButton";
 import { FormMessage } from "@/components/FormMessage";
 
@@ -10,6 +12,8 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
   const { invited } = await searchParams;
   const t = await getTranslations("settings");
   const locale = await getLocale();
+  const themeCookie = (await cookies()).get(THEME_COOKIE)?.value;
+  const theme = themeCookie === "light" || themeCookie === "dark" ? themeCookie : "system";
   const me = await getMe();
   const isSuper = me?.role === "super_user";
   const supabase = await createClient();
@@ -30,6 +34,17 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
         <form action={setLocale} className="flex gap-2">
           <button name="locale" value="nl" className={locale === "nl" ? "btn-primary" : "btn-secondary"}>Nederlands</button>
           <button name="locale" value="en" className={locale === "en" ? "btn-primary" : "btn-secondary"}>English</button>
+        </form>
+      </section>
+
+      <section className="card space-y-4 p-5">
+        <h2 className="font-display text-lg font-semibold">{t("theme")}</h2>
+        <form action={setTheme} className="flex flex-wrap gap-2">
+          {THEMES.map((th) => (
+            <button key={th} name="theme" value={th} aria-pressed={theme === th} className={theme === th ? "btn-primary" : "btn-secondary"}>
+              {t(`themes.${th}`)}
+            </button>
+          ))}
         </form>
       </section>
 

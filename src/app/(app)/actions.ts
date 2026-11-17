@@ -10,6 +10,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { CATEGORIES, DISPOSITIONS, SALE_STATUSES, STATUSES } from "@/lib/constants";
 import { env } from "@/lib/env";
 import { LOCALE_COOKIE } from "@/i18n/request";
+import { THEME_COOKIE, THEMES } from "@/lib/theme";
 
 // ---------------------------------------------------------------------------
 // Form helpers
@@ -191,6 +192,14 @@ export async function setLocale(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (user) await supabase.from("profiles").update({ locale }).eq("id", user.id);
+  revalidatePath("/", "layout");
+}
+
+export async function setTheme(formData: FormData) {
+  const theme = z.enum(THEMES).parse(formData.get("theme"));
+  const store = await cookies();
+  if (theme === "system") store.delete(THEME_COOKIE);
+  else store.set(THEME_COOKIE, theme, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
   revalidatePath("/", "layout");
 }
 

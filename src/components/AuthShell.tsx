@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 export function AuthShell({ title, intro, children }: { title: string; intro?: string; children: React.ReactNode }) {
+  // Brand tagline, shown on the sign-in screens only (decided 17 Nov 2026).
+  const tagline = "Make Our Venture Exciting";
   return (
     <main className="flex min-h-dvh items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
@@ -8,6 +10,7 @@ export function AuthShell({ title, intro, children }: { title: string; intro?: s
           <span className="font-display text-2xl font-bold tracking-tight">
             LayeredCake <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">MOVE</span>
           </span>
+          <span className="-mt-3 text-sm font-medium tracking-wide text-muted">{tagline}</span>
         </div>
         <div className="glass rounded-3xl p-6">
           <h1 className="font-display text-2xl font-bold">{title}</h1>

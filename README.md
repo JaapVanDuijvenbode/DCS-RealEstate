@@ -6,7 +6,7 @@ Product requirements: PRD v1.0, 14 November 2026 (Claude Docs, "PRD: Verhuis- & 
 
 ## Look and feel
 
-LayeredCake brand: honey `#F4C34B`, tangerine `#ED8E41`, raspberry `#C23B4B`, plum `#932B49` and deep plum `#671343`, with the layered-cake app icon. Raspberry is the action color, plum the status color; honey and tangerine are accents only, because white text on them is not readable. Headings use Plus Jakarta Sans, body text Inter. Panels are frosted glass over a warm gradient, in light and dark mode (follows the device), with a solid fallback when the device asks for reduced transparency.
+LayeredCake brand ("Make Our Venture Exciting", shown on the sign-in screens): honey `#F4C34B`, tangerine `#ED8E41`, raspberry `#C23B4B`, plum `#932B49` and deep plum `#671343`, with the layered-cake app icon. Raspberry is the action color, plum the status color; honey and tangerine are accents only, because white text on them is not readable. Headings use Plus Jakarta Sans, body text Inter. Panels are frosted glass over a warm gradient, in light and dark mode (follows the device, or set manually under Instellingen > Weergave), with a solid fallback when the device asks for reduced transparency.
 
 ## Release 1 (target 11 December 2026)
 
