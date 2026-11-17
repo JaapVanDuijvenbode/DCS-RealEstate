@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { getMe } from "@/lib/data";
@@ -17,6 +18,12 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
   return (
     <div className="space-y-6">
       <h1 className="font-serif text-3xl font-semibold">{t("title")}</h1>
+
+      <nav aria-label={t("shortcuts")} className="grid gap-3 sm:grid-cols-3 md:hidden">
+        <Link href="/labels" className="card p-4 font-semibold hover:border-brick">{t("labelsLink")}</Link>
+        <Link href="/verbouwing/leveranciers" className="card p-4 font-semibold hover:border-brick">{t("vendorsLink")}</Link>
+        <Link href="/verbouwing/ruimtes" className="card p-4 font-semibold hover:border-brick">{t("roomsLink")}</Link>
+      </nav>
 
       <section className="card space-y-4 p-5">
         <h2 className="font-serif text-lg font-semibold">{t("language")}</h2>

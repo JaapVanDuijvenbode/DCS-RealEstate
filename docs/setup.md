@@ -11,6 +11,13 @@ Apply the two migrations in `supabase/migrations`, oldest first:
 
 This creates the tables, the security rules, the private `photos` storage bucket, and the seed data (locations, rooms, room mapping, Menken box, move stages).
 
+**Release 4 (renovation planning):** run these two as well, in order:
+
+- `20261117090000_r4_renovation.sql`: projects, sub-items, dependencies, suppliers, building elements, mood boards and subsidies.
+- `20261117090100_r4_starter_projects.sql` (optional): starter projects from the PRD, such as the foundation survey (due 15 December 2026) and the priority rooms for move-in, without any amounts. Skip it if you prefer an empty board.
+
+With the CLI, `supabase db push` applies only the migrations that have not run yet.
+
 ## 2. Authentication (Supabase)
 
 **URL configuration**
