@@ -14,7 +14,19 @@ Product requirements: PRD v1.0, 14 November 2026 (Claude Docs, "PRD: Verhuis- & 
 - **Labels:** A6 labels, 4 per A4 sheet, with QR code to the box page, origin, destination floor band, contents and handling flags.
 - **Dashboard:** countdown to move-in, key dates, stages, counts and volume per disposition.
 
-Later releases: scanning runs and exceptions (R2), dashboard timeline and comments (R3), renovation module (R4).
+## Release 4: renovation planning (Nieuwe Rijn 98)
+
+- **Planning board:** kanban (drag cards between Idee, Te onderzoeken, Gepland, In uitvoering, Wacht, Gereed), list grouped by phase, and a timeline with dependency arrows. Filters for phase, room or building element, owner, supplier and text.
+- **Projects:** phase (Fase 0 to 5), type of work, priority, information status, owner, supplier, start and end date, rooms and building elements.
+- **Sub-items:** any project can hold sub-items, at any depth, with progress shown on the parent.
+- **Dependencies:** "depends on" links, with loop protection, a blocked badge while a prerequisite is open, and a warning when a project starts before its prerequisite ends.
+- **Costs incl. VAT:** estimate, quote, contracted, actual and forecast, with the basis and uncertainty of the estimate.
+- **Monument and permit:** heritage impact, permit need, status, reference, dates, advice; subsidies per project.
+- **Mood boards:** per room, building element and project: photos, links, RAL/NCS colors and materials with supplier and price, marked as favorite, option or rejected.
+- **Suppliers:** directory with trade, contact details, heritage experience, rating, and their projects and amounts.
+- **Rooms at Nieuwe Rijn 98:** readiness (niet gestart, in uitvoering, bewoonbaar, gereed), projects and mood board per room.
+
+Still to come: scanning runs and exceptions (R2), dashboard timeline and comments (R3).
 
 ## Stack
 
@@ -54,10 +66,11 @@ Without `RESEND_API_KEY`, sign-in codes are printed in the terminal.
 ## Project layout
 
 ```
-src/app/(app)/        signed-in screens: dashboard, kamers, meubels, d/[code] (box page), dozen, labels, instellingen
+src/app/(app)/        signed-in screens: dashboard, kamers, meubels, d/[code] (box page), dozen, labels, instellingen, verbouwing
 src/app/login, verify, wachtwoord, auth/   sign-in flow
 src/app/api/labels/   label PDF endpoint
-src/lib/              Supabase clients, auth helpers, fit check, label PDF, constants
+src/components/reno/  planning board views, project and supplier forms, mood board
+src/lib/              Supabase clients, auth helpers, fit check, label PDF, renovation data, constants
 src/messages/         nl.json and en.json
 supabase/migrations/  schema, security rules and seed data
 scripts/              admin bootstrap

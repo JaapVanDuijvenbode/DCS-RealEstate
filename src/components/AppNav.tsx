@@ -8,7 +8,8 @@ const items = [
   { href: "/", key: "overview", icon: <path d="M3 11l9-7 9 7M5 10v10h14V10" /> },
   { href: "/kamers", key: "rooms", icon: <><rect x="4" y="4" width="7" height="7" rx="1" /><rect x="13" y="4" width="7" height="7" rx="1" /><rect x="4" y="13" width="7" height="7" rx="1" /><rect x="13" y="13" width="7" height="7" rx="1" /></> },
   { href: "/dozen", key: "boxes", icon: <><path d="M3 8l9-4 9 4v9l-9 4-9-4z" /><path d="M3 8l9 4 9-4M12 12v9" /></> },
-  { href: "/labels", key: "labels", icon: <><path d="M4 4h10l6 6v10H4z" /><path d="M8 13h8M8 17h5" /></> },
+  { href: "/labels", key: "labels", desktopOnly: true, icon: <><path d="M4 4h10l6 6v10H4z" /><path d="M8 13h8M8 17h5" /></> },
+  { href: "/verbouwing", key: "renovation", icon: <><path d="M3 21h18M5 21V9l7-5 7 5v12" /><path d="M9 21v-6h6v6" /></> },
   { href: "/instellingen", key: "more", icon: <><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></> },
 ] as const;
 
@@ -40,7 +41,7 @@ export function AppNav({ variant }: { variant: "side" | "bottom" }) {
     );
   return (
     <nav aria-label={t("label")} className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-surface px-1 pb-[max(env(safe-area-inset-bottom),8px)] pt-1 md:hidden">
-      {items.map((it) => {
+      {items.filter((it) => !("desktopOnly" in it)).map((it) => {
         const active = isActive(path, it.href);
         return (
           <Link

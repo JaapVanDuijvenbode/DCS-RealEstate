@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getMe, getReference } from "@/lib/data";
 import { KEY_DATES, MOVE_IN_DATE } from "@/lib/constants";
 import { innerVolumeM3 } from "@/lib/fit";
+import { RENO_STATUSES, bestCost, formatDate, formatEur, getBoard } from "@/lib/reno";
 
 function daysUntil(iso: string): number {
   const today = new Date(new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Amsterdam" }));
@@ -38,6 +39,16 @@ export default async function Dashboard() {
     }
   }
   for (const b of boxRows) volume.set(b.disposition, (volume.get(b.disposition) ?? 0) + boxVol);
+
+  const tr = await getTranslations("reno");
+  const { cards: reno } = await getBoard(locale);
+  const todayIso = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Amsterdam" });
+  const upcoming = reno
+    .filter((c) => c.status !== "gereed" && c.end_date && c.end_date >= todayIso)
+    .sort((a, b) => a.end_date!.localeCompare(b.end_date!))
+    .slice(0, 4);
+  const renoForecast = reno.reduce((n, c) => n + Number(bestCost(c) ?? 0), 0);
+  const renoBlocked = reno.filter((c) => c.status !== "gereed" && c.blockedBy.length).length;
 
   const days = daysUntil(MOVE_IN_DATE);
   const fmt = new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "nl-NL", { day: "numeric", month: "short", year: "numeric" });
@@ -98,6 +109,31 @@ export default async function Dashboard() {
           </ul>
         </section>
       </div>
+
+      <section className="card p-5">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">{tr("title")}</h2>
+          <Link href="/verbouwing" className="text-sm font-semibold text-brick hover:underline">{tr("openBoard")}</Link>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {RENO_STATUSES.map((s) => {
+            const n = reno.filter((c) => c.status === s).length;
+            return n ? <span key={s} className="chip bg-ground py-1 text-[13px] text-ink">{tr(`status.${s}`)}: {n}</span> : null;
+          })}
+          {renoBlocked ? <span className="chip bg-brick py-1 text-[13px] text-on-brick">{tr("blockedCount", { count: renoBlocked })}</span> : null}
+          {renoForecast ? <span className="chip bg-canal-tint py-1 text-[13px] text-canal">{tr("expected")} {formatEur(renoForecast, locale)}</span> : null}
+        </div>
+        {upcoming.length ? (
+          <ul className="mt-3 divide-y divide-line">
+            {upcoming.map((c) => (
+              <li key={c.id} className="flex items-baseline justify-between gap-3 py-2.5">
+                <Link href={`/verbouwing/${c.id}`} className="min-w-0 truncate text-[15px] hover:text-brick">{c.title}</Link>
+                <span className="shrink-0 text-sm text-muted">{formatDate(c.end_date, locale)}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </section>
 
       <section className="card p-5">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">{t("volume")}</h2>

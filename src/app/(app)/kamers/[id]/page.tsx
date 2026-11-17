@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
-import { destLabel, getReference, roomLabel } from "@/lib/data";
+import { destLabel, getMe, getReference, roomLabel } from "@/lib/data";
 import { CATEGORIES, DISPOSITIONS } from "@/lib/constants";
 import type { Box, Item } from "@/lib/types";
 import { createBox, createItem } from "../../actions";
@@ -11,6 +11,11 @@ import { PhotoInput } from "@/components/PhotoInput";
 import { SubmitButton } from "@/components/SubmitButton";
 import { StatusChip } from "@/components/StatusChip";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { MoodBoard } from "@/components/reno/MoodBoard";
+import { TargetProjects } from "@/components/reno/TargetProjects";
+import { setRoomReadiness } from "../../verbouwing/actions";
+
+const READINESS = ["niet_gestart", "in_uitvoering", "bewoonbaar", "gereed"] as const;
 
 export default async function RoomPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -33,18 +38,43 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
       supabase.from("items").select("*").eq("dest_room_id", id).order("name"),
       supabase.from("boxes").select("*").eq("dest_room_id", id).order("code"),
     ]);
+    const tr = await getTranslations("reno");
+    const me = await getMe();
+    const incoming = [...((items.data ?? []) as Item[])];
+    const incomingBoxes = [...((boxes.data ?? []) as Box[])];
     return (
       <div className="space-y-6">
-        <Link href="/kamers" className="text-sm text-brick">← {t("title")}</Link>
-        <h1 className="font-serif text-3xl font-semibold">{destLabel(room, locale)}</h1>
-        <p className="text-muted">{location?.name}</p>
+        <Link href="/verbouwing/ruimtes" className="text-sm text-brick">← {tr("roomsAndElements")}</Link>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h1 className="font-serif text-3xl font-semibold">{destLabel(room, locale)}</h1>
+            <p className="text-muted">{location?.name}</p>
+          </div>
+          {me?.role === "super_user" ? (
+            <form action={setRoomReadiness} className="flex flex-wrap gap-1.5" aria-label={tr("readinessLabel")}>
+              <input type="hidden" name="room_id" value={room.id} />
+              {READINESS.map((r) => (
+                <button key={r} name="readiness" value={r} aria-pressed={room.readiness === r} className={`chip min-h-9 px-3 text-sm ${room.readiness === r ? "bg-canal text-surface" : "border border-line bg-surface text-ink hover:border-canal"}`}>
+                  {tr(`readiness.${r}`)}
+                </button>
+              ))}
+            </form>
+          ) : (
+            <span className="chip bg-canal-tint text-canal">{tr(`readiness.${room.readiness}`)}</span>
+          )}
+        </div>
+
+        <TargetProjects targetId={room.id} />
+        <MoodBoard kind="room" targetId={room.id} back={`/kamers/${room.id}`} />
+
         <section className="card p-5">
-          <h2 className="font-serif text-lg font-semibold">{t("incomingTitle")}</h2>
+          <h2 className="font-serif text-lg font-semibold">{t("incomingTitle")} ({incoming.length + incomingBoxes.length})</h2>
+          {incoming.length + incomingBoxes.length === 0 ? <p className="mt-2 text-sm text-muted">{t("incoming", { count: 0 })}</p> : null}
           <ul className="mt-2 divide-y divide-line">
-            {((items.data ?? []) as Item[]).map((i) => (
+            {incoming.map((i) => (
               <li key={i.id} className="flex justify-between py-2"><Link href={`/meubels/${i.id}`} className="hover:text-brick">{i.name}</Link><span className="text-sm text-muted">{roomLabel(roomById.get(i.room_id), locale)}</span></li>
             ))}
-            {((boxes.data ?? []) as Box[]).map((b) => (
+            {incomingBoxes.map((b) => (
               <li key={b.id} className="flex justify-between py-2"><Link href={`/d/${b.code}`} className="font-semibold hover:text-brick">{b.code}</Link><span className="truncate pl-4 text-sm text-muted">{b.contents}</span></li>
             ))}
           </ul>

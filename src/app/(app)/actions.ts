@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { parseAmount } from "@/lib/parse";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { CATEGORIES, DISPOSITIONS, SALE_STATUSES, STATUSES } from "@/lib/constants";
 import { env } from "@/lib/env";
@@ -13,7 +14,7 @@ import { LOCALE_COOKIE } from "@/i18n/request";
 // ---------------------------------------------------------------------------
 // Form helpers
 // ---------------------------------------------------------------------------
-const optNum = z.preprocess((v) => (v === "" || v == null ? null : Number(String(v).replace(",", "."))), z.number().nonnegative().nullable());
+const optNum = z.preprocess(parseAmount, z.number().nonnegative().nullable());
 const optText = z.preprocess((v) => (typeof v === "string" && v.trim() !== "" ? v.trim() : null), z.string().max(2000).nullable());
 const optId = z.preprocess((v) => (v === "" || v == null ? null : v), z.string().uuid().nullable());
 const optDate = z.preprocess((v) => (v === "" || v == null ? null : v), z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable());
