@@ -44,23 +44,23 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
     const incomingBoxes = [...((boxes.data ?? []) as Box[])];
     return (
       <div className="space-y-6">
-        <Link href="/verbouwing/ruimtes" className="text-sm text-brick">← {tr("roomsAndElements")}</Link>
+        <Link href="/verbouwing/ruimtes" className="text-sm text-primary">← {tr("roomsAndElements")}</Link>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h1 className="font-serif text-3xl font-semibold">{destLabel(room, locale)}</h1>
+            <h1 className="font-display text-3xl font-semibold">{destLabel(room, locale)}</h1>
             <p className="text-muted">{location?.name}</p>
           </div>
           {me?.role === "super_user" ? (
             <form action={setRoomReadiness} className="flex flex-wrap gap-1.5" aria-label={tr("readinessLabel")}>
               <input type="hidden" name="room_id" value={room.id} />
               {READINESS.map((r) => (
-                <button key={r} name="readiness" value={r} aria-pressed={room.readiness === r} className={`chip min-h-9 px-3 text-sm ${room.readiness === r ? "bg-canal text-surface" : "border border-line bg-surface text-ink hover:border-canal"}`}>
+                <button key={r} name="readiness" value={r} aria-pressed={room.readiness === r} className={`chip min-h-9 px-3 text-sm ${room.readiness === r ? "bg-secondary text-on-primary" : "border border-line bg-surface text-ink hover:border-secondary"}`}>
                   {tr(`readiness.${r}`)}
                 </button>
               ))}
             </form>
           ) : (
-            <span className="chip bg-canal-tint text-canal">{tr(`readiness.${room.readiness}`)}</span>
+            <span className="chip bg-secondary-tint text-secondary">{tr(`readiness.${room.readiness}`)}</span>
           )}
         </div>
 
@@ -68,14 +68,14 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
         <MoodBoard kind="room" targetId={room.id} back={`/kamers/${room.id}`} />
 
         <section className="card p-5">
-          <h2 className="font-serif text-lg font-semibold">{t("incomingTitle")} ({incoming.length + incomingBoxes.length})</h2>
+          <h2 className="font-display text-lg font-semibold">{t("incomingTitle")} ({incoming.length + incomingBoxes.length})</h2>
           {incoming.length + incomingBoxes.length === 0 ? <p className="mt-2 text-sm text-muted">{t("incoming", { count: 0 })}</p> : null}
           <ul className="mt-2 divide-y divide-line">
             {incoming.map((i) => (
-              <li key={i.id} className="flex justify-between py-2"><Link href={`/meubels/${i.id}`} className="hover:text-brick">{i.name}</Link><span className="text-sm text-muted">{roomLabel(roomById.get(i.room_id), locale)}</span></li>
+              <li key={i.id} className="flex justify-between py-2"><Link href={`/meubels/${i.id}`} className="hover:text-primary">{i.name}</Link><span className="text-sm text-muted">{roomLabel(roomById.get(i.room_id), locale)}</span></li>
             ))}
             {incomingBoxes.map((b) => (
-              <li key={b.id} className="flex justify-between py-2"><Link href={`/d/${b.code}`} className="font-semibold hover:text-brick">{b.code}</Link><span className="truncate pl-4 text-sm text-muted">{b.contents}</span></li>
+              <li key={b.id} className="flex justify-between py-2"><Link href={`/d/${b.code}`} className="font-semibold hover:text-primary">{b.code}</Link><span className="truncate pl-4 text-sm text-muted">{b.contents}</span></li>
             ))}
           </ul>
         </section>
@@ -94,9 +94,9 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="space-y-6">
-      <Link href="/kamers" className="text-sm text-brick">← {t("title")}</Link>
+      <Link href="/kamers" className="text-sm text-primary">← {t("title")}</Link>
       <div>
-        <h1 className="font-serif text-3xl font-semibold">{roomLabel(room, locale)}</h1>
+        <h1 className="font-display text-3xl font-semibold">{roomLabel(room, locale)}</h1>
         <p className="mt-1 text-muted">
           {location?.name} · {locale === "en" ? room.floor_en : room.floor_nl}
           {defaultDest ? ` · ${t("goesTo", { room: destLabel(defaultDest, locale) })}` : ""}
@@ -107,13 +107,13 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
         {/* Boxes */}
         <section className="card space-y-4 p-5">
           <div className="flex items-center justify-between">
-            <h2 className="font-serif text-xl font-semibold">{tb("title")} ({boxRows.length})</h2>
+            <h2 className="font-display text-xl font-semibold">{tb("title")} ({boxRows.length})</h2>
             {boxRows.length > 0 ? (
               <a href={`/api/labels?room=${room.id}`} className="btn-secondary min-h-9 px-3 text-sm">{tb("printLabels")}</a>
             ) : null}
           </div>
           <details className="rounded-xl border border-line p-4" open={boxRows.length === 0}>
-            <summary className="cursor-pointer font-semibold text-brick">{tb("add")}</summary>
+            <summary className="cursor-pointer font-semibold text-primary">{tb("add")}</summary>
             <form action={createBox} className="mt-4 space-y-3">
               <input type="hidden" name="room_id" value={room.id} />
               <input type="hidden" name="box_type_id" value={defaultBoxType?.id ?? ""} />
@@ -134,9 +134,9 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
                 </div>
               </div>
               <div className="flex flex-wrap gap-x-5 gap-y-2 text-[15px]">
-                <label className="flex items-center gap-2"><input type="checkbox" name="fragile" className="h-5 w-5 accent-[var(--brick)]" />{tb("fragile")}</label>
-                <label className="flex items-center gap-2"><input type="checkbox" name="heavy" className="h-5 w-5 accent-[var(--brick)]" />{tb("heavy")}</label>
-                <label className="flex items-center gap-2"><input type="checkbox" name="this_side_up" className="h-5 w-5 accent-[var(--brick)]" />{tb("thisSideUp")}</label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="fragile" className="h-5 w-5 accent-[var(--primary)]" />{tb("fragile")}</label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="heavy" className="h-5 w-5 accent-[var(--primary)]" />{tb("heavy")}</label>
+                <label className="flex items-center gap-2"><input type="checkbox" name="this_side_up" className="h-5 w-5 accent-[var(--primary)]" />{tb("thisSideUp")}</label>
               </div>
               <SubmitButton>{tb("create")}</SubmitButton>
             </form>
@@ -144,7 +144,7 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
           <ul className="divide-y divide-line">
             {boxRows.map((b) => (
               <li key={b.id}>
-                <Link href={`/d/${b.code}`} className="flex items-center justify-between gap-3 py-3 hover:text-brick">
+                <Link href={`/d/${b.code}`} className="flex items-center justify-between gap-3 py-3 hover:text-primary">
                   <span className="min-w-0">
                     <span className="block font-semibold">{b.code}</span>
                     <span className="block truncate text-sm text-muted">{b.contents || tb("noContents")}</span>
@@ -158,9 +158,9 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
 
         {/* Furniture */}
         <section className="card space-y-4 p-5">
-          <h2 className="font-serif text-xl font-semibold">{ti("title")} ({itemRows.length})</h2>
+          <h2 className="font-display text-xl font-semibold">{ti("title")} ({itemRows.length})</h2>
           <details className="rounded-xl border border-line p-4" open={itemRows.length === 0}>
-            <summary className="cursor-pointer font-semibold text-brick">{ti("add")}</summary>
+            <summary className="cursor-pointer font-semibold text-primary">{ti("add")}</summary>
             <form action={createItem} className="mt-4 space-y-3">
               <input type="hidden" name="room_id" value={room.id} />
               <input type="hidden" name="interim_room_id" value={room.default_interim_room_id ?? ""} />
@@ -209,7 +209,7 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
                   <input id="value_eur" name="value_eur" inputMode="decimal" className="field" />
                 </div>
               </div>
-              <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="fragile" className="h-5 w-5 accent-[var(--brick)]" />{ti("fragile")}</label>
+              <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="fragile" className="h-5 w-5 accent-[var(--primary)]" />{ti("fragile")}</label>
               <PhotoInput />
               <SubmitButton>{ti("create")}</SubmitButton>
             </form>
@@ -217,7 +217,7 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
           <ul className="divide-y divide-line">
             {itemRows.map((i) => (
               <li key={i.id}>
-                <Link href={`/meubels/${i.id}`} className="flex items-center justify-between gap-3 py-3 hover:text-brick">
+                <Link href={`/meubels/${i.id}`} className="flex items-center justify-between gap-3 py-3 hover:text-primary">
                   <span className="min-w-0">
                     <span className="block font-semibold">{i.quantity > 1 ? `${i.quantity}× ` : ""}{i.name}</span>
                     <span className="block truncate text-sm text-muted">

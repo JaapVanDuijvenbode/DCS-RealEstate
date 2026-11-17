@@ -17,16 +17,16 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="space-y-6">
-      <h1 className="font-serif text-3xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-3xl font-semibold">{t("title")}</h1>
 
       <nav aria-label={t("shortcuts")} className="grid gap-3 sm:grid-cols-3 md:hidden">
-        <Link href="/labels" className="card p-4 font-semibold hover:border-brick">{t("labelsLink")}</Link>
-        <Link href="/verbouwing/leveranciers" className="card p-4 font-semibold hover:border-brick">{t("vendorsLink")}</Link>
-        <Link href="/verbouwing/ruimtes" className="card p-4 font-semibold hover:border-brick">{t("roomsLink")}</Link>
+        <Link href="/labels" className="card p-4 font-semibold hover:border-primary">{t("labelsLink")}</Link>
+        <Link href="/verbouwing/leveranciers" className="card p-4 font-semibold hover:border-primary">{t("vendorsLink")}</Link>
+        <Link href="/verbouwing/ruimtes" className="card p-4 font-semibold hover:border-primary">{t("roomsLink")}</Link>
       </nav>
 
       <section className="card space-y-4 p-5">
-        <h2 className="font-serif text-lg font-semibold">{t("language")}</h2>
+        <h2 className="font-display text-lg font-semibold">{t("language")}</h2>
         <form action={setLocale} className="flex gap-2">
           <button name="locale" value="nl" className={locale === "nl" ? "btn-primary" : "btn-secondary"}>Nederlands</button>
           <button name="locale" value="en" className={locale === "en" ? "btn-primary" : "btn-secondary"}>English</button>
@@ -34,7 +34,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
       </section>
 
       <section className="card space-y-4 p-5">
-        <h2 className="font-serif text-lg font-semibold">{t("profile")}</h2>
+        <h2 className="font-display text-lg font-semibold">{t("profile")}</h2>
         <p className="text-sm text-muted">{me?.email} · {me?.username ? `@${me.username}` : ""} · {t(`roles.${me?.role ?? "contributor"}`)}</p>
         <form action={updateDisplayName} className="flex gap-2">
           <label className="sr-only" htmlFor="display_name">{t("displayName")}</label>
@@ -45,7 +45,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
 
       {isSuper ? (
         <section className="card space-y-4 p-5">
-          <h2 className="font-serif text-lg font-semibold">{t("members")}</h2>
+          <h2 className="font-display text-lg font-semibold">{t("members")}</h2>
           <ul className="divide-y divide-line">
             {(members ?? []).map((m) => (
               <li key={m.email} className="flex flex-wrap justify-between gap-2 py-2 text-[15px]">

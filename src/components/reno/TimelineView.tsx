@@ -92,14 +92,14 @@ export async function TimelineView({ cards }: { cards: BoardCard[] }) {
         <div className="overflow-x-auto">
           <div className="flex" style={{ width: LABEL_W + width }}>
             {/* Labels */}
-            <div className="sticky left-0 z-10 shrink-0 border-r border-line bg-surface" style={{ width: LABEL_W }}>
+            <div className="sticky left-0 z-10 shrink-0 border-r border-line bg-surface-strong" style={{ width: LABEL_W }}>
               <div className="flex items-end px-4 pb-2 text-xs font-semibold uppercase tracking-wide text-muted" style={{ height: HEADER }}>
                 {t("project")}
               </div>
               {dated.map(({ card, depth }) => (
                 <div key={card.id} className="flex items-center gap-1.5 border-t border-line/70 px-4" style={{ height: ROW, paddingLeft: 16 + depth * 16 }}>
                   {depth > 0 ? <span aria-hidden="true" className="text-muted">↳</span> : null}
-                  <Link href={`/verbouwing/${card.id}`} className="truncate text-[14px] hover:text-brick" title={card.title}>
+                  <Link href={`/verbouwing/${card.id}`} className="truncate text-[14px] hover:text-primary" title={card.title}>
                     {card.title}
                   </Link>
                 </div>
@@ -116,8 +116,8 @@ export async function TimelineView({ cards }: { cards: BoardCard[] }) {
               {dated.map(({ card }, i) => (
                 <div key={card.id} className="absolute left-0 right-0 border-t border-line/70" style={{ top: HEADER + i * ROW }} />
               ))}
-              <div className="absolute border-l-2 border-dashed border-brick" style={{ left: x(today), top: HEADER - 6, height: height - HEADER + 6 }} aria-hidden="true" />
-              <span className="absolute whitespace-nowrap text-xs font-semibold text-brick" style={{ left: x(today) + 4, top: HEADER - 16 }}>
+              <div className="absolute border-l-2 border-dashed border-primary" style={{ left: x(today), top: HEADER - 6, height: height - HEADER + 6 }} aria-hidden="true" />
+              <span className="absolute whitespace-nowrap text-xs font-semibold text-primary" style={{ left: x(today) + 4, top: HEADER - 16 }}>
                 {t("today")}
               </span>
 
@@ -127,11 +127,11 @@ export async function TimelineView({ cards }: { cards: BoardCard[] }) {
                     <path d="M0 0L10 5L0 10z" fill="var(--muted)" />
                   </marker>
                   <marker id="dep-arrow-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M0 0L10 5L0 10z" fill="var(--brick)" />
+                    <path d="M0 0L10 5L0 10z" fill="var(--primary)" />
                   </marker>
                 </defs>
                 {arrows.map((a) => (
-                  <path key={a.key} d={a.d} fill="none" stroke={a.conflict ? "var(--brick)" : "var(--muted)"} strokeWidth="1.25" strokeDasharray={a.conflict ? "4 3" : undefined} markerEnd={`url(#${a.conflict ? "dep-arrow-bad" : "dep-arrow"})`} />
+                  <path key={a.key} d={a.d} fill="none" stroke={a.conflict ? "var(--primary)" : "var(--muted)"} strokeWidth="1.25" strokeDasharray={a.conflict ? "4 3" : undefined} markerEnd={`url(#${a.conflict ? "dep-arrow-bad" : "dep-arrow"})`} />
                 ))}
               </svg>
 
@@ -158,7 +158,7 @@ export async function TimelineView({ cards }: { cards: BoardCard[] }) {
                     href={`/verbouwing/${card.id}`}
                     title={label}
                     aria-label={label}
-                    className={`absolute rounded-md ${card.blockedBy.length ? "outline-2 outline-dashed outline-brick" : ""}`}
+                    className={`absolute rounded-md ${card.blockedBy.length ? "outline-2 outline-dashed outline-primary" : ""}`}
                     style={{ left: g.x1, width: Math.max(g.x2 - g.x1, 6), top: yMid(i) - 9, height: 18, background: color, opacity: done ? 0.45 : 1 }}
                   />
                 );
@@ -184,7 +184,7 @@ export async function TimelineView({ cards }: { cards: BoardCard[] }) {
           <ul className="mt-2 flex flex-wrap gap-2">
             {undated.map(({ card }) => (
               <li key={card.id}>
-                <Link href={`/verbouwing/${card.id}`} className="chip bg-ground py-1 text-[13px] text-ink hover:text-brick">{card.title}</Link>
+                <Link href={`/verbouwing/${card.id}`} className="chip bg-ink/5 py-1 text-[13px] text-ink hover:text-primary">{card.title}</Link>
               </li>
             ))}
           </ul>

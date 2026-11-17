@@ -15,8 +15,8 @@ export default async function NewProjectPage({ searchParams }: { searchParams: P
 
   return (
     <div className="space-y-5">
-      <Link href={parent ? `/verbouwing/${parent.id}` : "/verbouwing"} className="text-sm text-brick">← {parent ? parent.title : t("title")}</Link>
-      <h1 className="font-serif text-3xl font-semibold">{parent ? t("newSubItem") : t("newProject")}</h1>
+      <Link href={parent ? `/verbouwing/${parent.id}` : "/verbouwing"} className="text-sm text-primary">← {parent ? parent.title : t("title")}</Link>
+      <h1 className="font-display text-3xl font-semibold">{parent ? t("newSubItem") : t("newProject")}</h1>
       <ProjectForm
         defaults={{ parent_id: parent?.id ?? null, phase: parent?.phase ?? "fase_0", status }}
         targetIds={sp.target ? [sp.target] : []}

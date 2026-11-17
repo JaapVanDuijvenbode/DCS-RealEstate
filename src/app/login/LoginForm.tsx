@@ -22,7 +22,7 @@ export function LoginForm({ next }: { next: string }) {
         </div>
         <FormMessage error={resetState.error} ok={resetState.ok} />
         <SubmitButton className="w-full">{t("reset.submit")}</SubmitButton>
-        <button type="button" className="w-full text-sm text-brick underline-offset-2 hover:underline" onClick={() => setMode("login")}>
+        <button type="button" className="w-full text-sm text-primary underline-offset-2 hover:underline" onClick={() => setMode("login")}>
           {t("reset.back")}
         </button>
       </form>
@@ -41,7 +41,7 @@ export function LoginForm({ next }: { next: string }) {
       </div>
       <FormMessage error={loginState.error} />
       <SubmitButton className="w-full">{t("signIn")}</SubmitButton>
-      <button type="button" className="w-full text-sm text-brick underline-offset-2 hover:underline" onClick={() => setMode("reset")}>
+      <button type="button" className="w-full text-sm text-primary underline-offset-2 hover:underline" onClick={() => setMode("reset")}>
         {t("forgot")}
       </button>
     </form>

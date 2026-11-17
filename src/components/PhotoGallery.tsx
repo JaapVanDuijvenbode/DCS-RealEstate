@@ -18,7 +18,7 @@ export async function PhotoGallery({ kind, targetId, back }: Props) {
 
   return (
     <section className="space-y-3">
-      <h2 className="font-serif text-lg font-semibold">{t("photos")}</h2>
+      <h2 className="font-display text-lg font-semibold">{t("photos")}</h2>
       {signed && signed.length > 0 ? (
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
           {signed.map((s) =>

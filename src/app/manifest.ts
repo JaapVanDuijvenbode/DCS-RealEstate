@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Verhuizing en verbouwing Nieuwe Rijn 98",
     start_url: "/",
     display: "standalone",
-    background_color: "#f6f0e7",
-    theme_color: "#9a3b28",
+    background_color: "#fff6ee",
+    theme_color: "#c23b4b",
     lang: "nl",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

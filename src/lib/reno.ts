@@ -17,14 +17,14 @@ export const VENDOR_TRADES = ["architect", "constructeur", "aannemer", "restaura
 export type RenoStatus = (typeof RENO_STATUSES)[number];
 export type RenoPhase = (typeof PHASES)[number];
 
-// Bar colour per phase on the timeline (palette B, distinct in lightness).
+// Bar colour per phase on the timeline (LayeredCake palette, distinct in lightness).
 export const PHASE_COLORS: Record<RenoPhase, string> = {
-  fase_0: "#8A9097",
-  fase_1: "#9A3B28",
-  fase_2: "#C46A4E",
-  fase_3: "#2F5D50",
-  fase_4: "#5E8C7E",
-  fase_5: "#4A4F57",
+  fase_0: "#A48E98",
+  fase_1: "#C23B4B",
+  fase_2: "#ED8E41",
+  fase_3: "#932B49",
+  fase_4: "#F4C34B",
+  fase_5: "#671343",
 };
 
 export type RenoProject = {

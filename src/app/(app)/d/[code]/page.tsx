@@ -44,10 +44,10 @@ export default async function BoxPage({ params, searchParams }: { params: Promis
 
   return (
     <div className="space-y-6">
-      <Link href={`/kamers/${box.room_id}`} className="text-sm text-brick">← {roomLabel(room, locale)}</Link>
+      <Link href={`/kamers/${box.room_id}`} className="text-sm text-primary">← {roomLabel(room, locale)}</Link>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="font-serif text-3xl font-semibold">{box.code}</h1>
+          <h1 className="font-display text-3xl font-semibold">{box.code}</h1>
           <p className="mt-1 text-muted">{location?.name} · {roomLabel(room, locale)}</p>
         </div>
         <StatusChip status={box.status} />
@@ -67,9 +67,9 @@ export default async function BoxPage({ params, searchParams }: { params: Promis
         ) : null}
         <p className="whitespace-pre-line text-[15px]">{box.contents || tb("noContents")}</p>
         <div className="flex flex-wrap gap-2">
-          {box.fragile ? <span className="chip bg-brick-tint text-brick">{tb("fragile")}</span> : null}
-          {box.heavy ? <span className="chip bg-brick-tint text-brick">{tb("heavy")}</span> : null}
-          {box.this_side_up ? <span className="chip bg-brick-tint text-brick">{tb("thisSideUp")}</span> : null}
+          {box.fragile ? <span className="chip bg-primary-tint text-primary">{tb("fragile")}</span> : null}
+          {box.heavy ? <span className="chip bg-primary-tint text-primary">{tb("heavy")}</span> : null}
+          {box.this_side_up ? <span className="chip bg-primary-tint text-primary">{tb("thisSideUp")}</span> : null}
         </div>
         <div className="flex flex-wrap gap-2 pt-1">
           {next ? (
@@ -84,7 +84,7 @@ export default async function BoxPage({ params, searchParams }: { params: Promis
       </section>
 
       <details className="card p-5">
-        <summary className="cursor-pointer font-serif text-lg font-semibold">{tc("edit")}</summary>
+        <summary className="cursor-pointer font-display text-lg font-semibold">{tc("edit")}</summary>
         <form action={updateBox} className="mt-4 space-y-3">
           <input type="hidden" name="id" value={box.id} />
           <input type="hidden" name="room_id" value={box.room_id} />
@@ -130,9 +130,9 @@ export default async function BoxPage({ params, searchParams }: { params: Promis
             </div>
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-2 text-[15px]">
-            <label className="flex items-center gap-2"><input type="checkbox" name="fragile" defaultChecked={box.fragile} className="h-5 w-5 accent-[var(--brick)]" />{tb("fragile")}</label>
-            <label className="flex items-center gap-2"><input type="checkbox" name="heavy" defaultChecked={box.heavy} className="h-5 w-5 accent-[var(--brick)]" />{tb("heavy")}</label>
-            <label className="flex items-center gap-2"><input type="checkbox" name="this_side_up" defaultChecked={box.this_side_up} className="h-5 w-5 accent-[var(--brick)]" />{tb("thisSideUp")}</label>
+            <label className="flex items-center gap-2"><input type="checkbox" name="fragile" defaultChecked={box.fragile} className="h-5 w-5 accent-[var(--primary)]" />{tb("fragile")}</label>
+            <label className="flex items-center gap-2"><input type="checkbox" name="heavy" defaultChecked={box.heavy} className="h-5 w-5 accent-[var(--primary)]" />{tb("heavy")}</label>
+            <label className="flex items-center gap-2"><input type="checkbox" name="this_side_up" defaultChecked={box.this_side_up} className="h-5 w-5 accent-[var(--primary)]" />{tb("thisSideUp")}</label>
           </div>
           <div>
             <label className="label" htmlFor="notes">{tc("notes")}</label>
@@ -145,7 +145,7 @@ export default async function BoxPage({ params, searchParams }: { params: Promis
       <PhotoGallery kind="box" targetId={box.id} back={`/d/${box.code}`} />
 
       <section className="card p-5">
-        <h2 className="font-serif text-lg font-semibold">{tb("history")}</h2>
+        <h2 className="font-display text-lg font-semibold">{tb("history")}</h2>
         <ul className="mt-2 divide-y divide-line">
           {(history ?? []).map((h, idx) => (
             <li key={idx} className="flex justify-between py-2 text-[15px]">

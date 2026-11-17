@@ -5,10 +5,10 @@ import { getReference, roomLabel } from "@/lib/data";
 import { elementLabel, getBoard, getRenoReference } from "@/lib/reno";
 
 const READY_TONE: Record<string, string> = {
-  niet_gestart: "bg-ground text-ink",
-  in_uitvoering: "bg-brick-tint text-brick",
-  bewoonbaar: "bg-canal-tint text-canal",
-  gereed: "bg-canal text-surface",
+  niet_gestart: "bg-ink/5 text-ink",
+  in_uitvoering: "bg-primary-tint text-primary",
+  bewoonbaar: "bg-secondary-tint text-secondary",
+  gereed: "bg-secondary text-on-primary",
 };
 
 export default async function RoomsAndElementsPage() {
@@ -41,21 +41,21 @@ export default async function RoomsAndElementsPage() {
 
   return (
     <div className="space-y-8">
-      <Link href="/verbouwing" className="text-sm text-brick">← {t("title")}</Link>
+      <Link href="/verbouwing" className="text-sm text-primary">← {t("title")}</Link>
       <div>
-        <h1 className="font-serif text-3xl font-semibold">{t("roomsAndElements")}</h1>
+        <h1 className="font-display text-3xl font-semibold">{t("roomsAndElements")}</h1>
         <p className="mt-1 text-[15px] text-muted">{t("roomsIntro")}</p>
       </div>
       {floors.map((f) => (
         <section key={f.key} className="space-y-3">
-          <h2 className="font-serif text-xl font-semibold">{f.label}</h2>
+          <h2 className="font-display text-xl font-semibold">{f.label}</h2>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {f.rooms.map((r) => (
               <li key={r.id}>
-                <Link href={`/kamers/${r.id}`} className="card block h-full p-4 hover:border-brick">
+                <Link href={`/kamers/${r.id}`} className="card block h-full p-4 hover:border-primary">
                   <div className="flex items-start justify-between gap-2">
                     <span className="text-[16px] font-semibold">{roomLabel(r, locale)}</span>
-                    <span className={`chip ${READY_TONE[r.readiness] ?? "bg-ground"}`}>{t(`readiness.${r.readiness}`)}</span>
+                    <span className={`chip ${READY_TONE[r.readiness] ?? "bg-ink/5"}`}>{t(`readiness.${r.readiness}`)}</span>
                   </div>
                   <p className="mt-1 text-sm text-muted">{summary(r.id)}</p>
                 </Link>
@@ -65,11 +65,11 @@ export default async function RoomsAndElementsPage() {
         </section>
       ))}
       <section className="space-y-3">
-        <h2 className="font-serif text-xl font-semibold">{t("elements")}</h2>
+        <h2 className="font-display text-xl font-semibold">{t("elements")}</h2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {elements.map((e) => (
             <li key={e.id}>
-              <Link href={`/verbouwing/onderdelen/${e.id}`} className="card block h-full p-4 hover:border-brick">
+              <Link href={`/verbouwing/onderdelen/${e.id}`} className="card block h-full p-4 hover:border-primary">
                 <span className="text-[16px] font-semibold">{elementLabel(e, locale)}</span>
                 <p className="mt-1 text-sm text-muted">{summary(e.id)}</p>
               </Link>

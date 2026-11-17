@@ -23,24 +23,24 @@ export default async function VendorPage({ params, searchParams }: { params: Pro
 
   return (
     <div className="space-y-6">
-      <Link href="/verbouwing/leveranciers" className="text-sm text-brick">← {t("vendors")}</Link>
+      <Link href="/verbouwing/leveranciers" className="text-sm text-primary">← {t("vendors")}</Link>
       <div>
-        <h1 className="font-serif text-3xl font-semibold">{vendor.name}</h1>
+        <h1 className="font-display text-3xl font-semibold">{vendor.name}</h1>
         <p className="mt-1 text-muted">
           {vendor.trade ? t(`trade.${vendor.trade}`) : ""}
           {vendor.contact_name ? ` · ${vendor.contact_name}` : ""}
         </p>
         <div className="mt-2 flex flex-wrap gap-3 text-[15px]">
-          {vendor.phone ? <a href={`tel:${vendor.phone}`} className="text-brick hover:underline">{vendor.phone}</a> : null}
-          {vendor.email ? <a href={`mailto:${vendor.email}`} className="text-brick hover:underline">{vendor.email}</a> : null}
-          {vendor.website ? <a href={vendor.website.startsWith("http") ? vendor.website : `https://${vendor.website}`} target="_blank" rel="noreferrer" className="text-brick hover:underline">{vendor.website}</a> : null}
+          {vendor.phone ? <a href={`tel:${vendor.phone}`} className="text-primary hover:underline">{vendor.phone}</a> : null}
+          {vendor.email ? <a href={`mailto:${vendor.email}`} className="text-primary hover:underline">{vendor.email}</a> : null}
+          {vendor.website ? <a href={vendor.website.startsWith("http") ? vendor.website : `https://${vendor.website}`} target="_blank" rel="noreferrer" className="text-primary hover:underline">{vendor.website}</a> : null}
         </div>
       </div>
       <FormMessage ok={saved ? tc("saved") : null} />
 
       <section className="card p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-serif text-xl font-semibold">{t("vendorProjects")}</h2>
+          <h2 className="font-display text-xl font-semibold">{t("vendorProjects")}</h2>
           <span className="text-sm text-muted">
             {sum("quote_eur") ? `${t("cost.quote_eur")} ${formatEur(sum("quote_eur"), locale)}` : ""}
             {sum("contract_eur") ? ` · ${t("cost.contract_eur")} ${formatEur(sum("contract_eur"), locale)}` : ""}
@@ -53,7 +53,7 @@ export default async function VendorPage({ params, searchParams }: { params: Pro
           <ul className="mt-2 divide-y divide-line">
             {projects.map((p) => (
               <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 py-2.5">
-                <Link href={`/verbouwing/${p.id}`} className="font-semibold hover:text-brick">{p.title}</Link>
+                <Link href={`/verbouwing/${p.id}`} className="font-semibold hover:text-primary">{p.title}</Link>
                 <span className="text-sm text-muted">
                   {t(`status.${p.status}`)}
                   {p.end_date ? ` · ${formatDate(p.end_date, locale)}` : ""}
@@ -66,7 +66,7 @@ export default async function VendorPage({ params, searchParams }: { params: Pro
       </section>
 
       <details>
-        <summary className="cursor-pointer font-serif text-xl font-semibold">{tc("edit")}</summary>
+        <summary className="cursor-pointer font-display text-xl font-semibold">{tc("edit")}</summary>
         <div className="mt-3"><VendorForm vendor={vendor} /></div>
       </details>
 

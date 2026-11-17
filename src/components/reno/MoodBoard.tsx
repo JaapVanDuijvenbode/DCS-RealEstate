@@ -24,8 +24,8 @@ type MoodRow = {
 };
 
 const VERDICT_TONE: Record<string, string> = {
-  favoriet: "bg-canal text-surface",
-  optie: "bg-ground text-ink",
+  favoriet: "bg-secondary text-on-primary",
+  optie: "bg-ink/5 text-ink",
   afgewezen: "bg-line text-muted line-through",
 };
 
@@ -60,7 +60,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
   return (
     <section className="space-y-4">
       <div className="flex items-baseline justify-between gap-3">
-        <h2 className="font-serif text-xl font-semibold">{title ?? t("title")}</h2>
+        <h2 className="font-display text-xl font-semibold">{title ?? t("title")}</h2>
         <span className="text-sm text-muted">{t("count", { count: items.length })}</span>
       </div>
 
@@ -74,7 +74,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
             return (
               <li key={m.id} className={`card flex flex-col overflow-hidden ${m.verdict === "afgewezen" ? "opacity-60" : ""}`}>
                 {m.kind === "image" && img ? (
-                  <a href={img} target="_blank" rel="noreferrer" className="block aspect-[4/3] bg-ground">
+                  <a href={img} target="_blank" rel="noreferrer" className="block aspect-[4/3] bg-ink/5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img} alt={m.title ?? ""} className="h-full w-full object-cover" loading="lazy" />
                   </a>
@@ -85,13 +85,13 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
                   </div>
                 ) : null}
                 {m.kind === "link" && m.url ? (
-                  <a href={m.url} target="_blank" rel="noreferrer" className="flex aspect-[4/3] flex-col justify-end bg-ground p-3 hover:bg-brick-tint">
+                  <a href={m.url} target="_blank" rel="noreferrer" className="flex aspect-[4/3] flex-col justify-end bg-ink/5 p-3 hover:bg-primary-tint">
                     <span className="text-xs uppercase tracking-wide text-muted">{t("kind.link")}</span>
-                    <span className="truncate font-semibold text-brick">{hostOf(m.url)}</span>
+                    <span className="truncate font-semibold text-primary">{hostOf(m.url)}</span>
                   </a>
                 ) : null}
                 {m.kind === "material" ? (
-                  <div className="flex aspect-[4/3] flex-col justify-end bg-ground p-3">
+                  <div className="flex aspect-[4/3] flex-col justify-end bg-ink/5 p-3">
                     <span className="text-xs uppercase tracking-wide text-muted">{t("kind.material")}</span>
                     <span className="font-semibold">{m.title}</span>
                   </div>
@@ -106,7 +106,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
                     </p>
                   ) : null}
                   {m.kind === "material" && m.url ? (
-                    <a href={m.url} target="_blank" rel="noreferrer" className="truncate text-brick hover:underline">{hostOf(m.url)}</a>
+                    <a href={m.url} target="_blank" rel="noreferrer" className="truncate text-primary hover:underline">{hostOf(m.url)}</a>
                   ) : null}
                   {m.note ? <p className="text-muted">{m.note}</p> : null}
                   <div className="mt-auto flex flex-wrap items-center gap-1 pt-1">
@@ -118,7 +118,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
                         <button
                           type="submit"
                           aria-pressed={m.verdict === v}
-                          className={`chip min-h-8 ${m.verdict === v ? VERDICT_TONE[v] : "border border-line bg-surface text-muted hover:border-brick"}`}
+                          className={`chip min-h-8 ${m.verdict === v ? VERDICT_TONE[v] : "border border-line bg-surface text-muted hover:border-primary"}`}
                         >
                           {t(`verdict.${v}`)}
                         </button>

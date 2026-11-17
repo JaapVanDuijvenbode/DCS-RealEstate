@@ -24,11 +24,11 @@ export function treeOrder(cards: BoardCard[]): { card: BoardCard; depth: number 
 
 const STATUS_TONE: Record<string, string> = {
   idee: "bg-line/70 text-ink",
-  te_onderzoeken: "bg-ground text-ink",
-  gepland: "bg-brick-tint text-brick",
-  in_uitvoering: "bg-canal-tint text-canal",
-  wacht: "bg-brick text-on-brick",
-  gereed: "bg-canal text-surface",
+  te_onderzoeken: "bg-ink/5 text-ink",
+  gepland: "bg-primary-tint text-primary",
+  in_uitvoering: "bg-secondary-tint text-secondary",
+  wacht: "bg-primary text-on-primary",
+  gereed: "bg-secondary text-on-primary",
 };
 
 export async function ListView({ cards }: { cards: BoardCard[] }) {
@@ -55,7 +55,7 @@ export async function ListView({ cards }: { cards: BoardCard[] }) {
         return (
           <section key={phase} className="card overflow-hidden">
             <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line px-4 py-3">
-              <h2 className="font-serif text-lg font-semibold">{t(`phase.${phase}`)}</h2>
+              <h2 className="font-display text-lg font-semibold">{t(`phase.${phase}`)}</h2>
               <span className="text-sm text-muted">
                 {t("itemsCount", { count: phaseRows.length })}
                 {total ? ` · ${t("estimate")} ${formatEur(total, locale)}` : ""}
@@ -75,7 +75,7 @@ export async function ListView({ cards }: { cards: BoardCard[] }) {
                   <col style={{ width: "9%" }} />
                   <col style={{ width: "9%" }} />
                 </colgroup>
-                <thead className="bg-ground/60 text-left text-xs uppercase tracking-wide text-muted">
+                <thead className="bg-ink/[0.03] text-left text-xs uppercase tracking-wide text-muted">
                   <tr>
                     <th scope="col" className="px-4 py-2 font-semibold">{t("project")}</th>
                     <th scope="col" className="px-3 py-2 font-semibold">{t("statusLabel")}</th>
@@ -90,20 +90,20 @@ export async function ListView({ cards }: { cards: BoardCard[] }) {
                 </thead>
                 <tbody className="divide-y divide-line">
                   {phaseRows.map(({ card, depth }) => (
-                    <tr key={card.id} className="hover:bg-ground/50">
+                    <tr key={card.id} className="hover:bg-ink/[0.03]">
                       <td className="px-4 py-2.5">
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1" style={{ paddingLeft: depth * 20 }}>
                           {depth > 0 ? <span aria-hidden="true" className="text-muted">↳</span> : null}
-                          <Link href={`/verbouwing/${card.id}`} className="font-semibold hover:text-brick">{card.title}</Link>
-                          {card.blockedBy.length ? <span className="chip whitespace-nowrap bg-brick text-on-brick" title={card.blockedBy.join(", ")}>{t("blocked")}</span> : null}
-                          {card.childCount ? <span className="chip whitespace-nowrap bg-canal-tint text-canal">{t("subProgress", { done: card.childDone, total: card.childCount })}</span> : null}
+                          <Link href={`/verbouwing/${card.id}`} className="font-semibold hover:text-primary">{card.title}</Link>
+                          {card.blockedBy.length ? <span className="chip whitespace-nowrap bg-primary text-on-primary" title={card.blockedBy.join(", ")}>{t("blocked")}</span> : null}
+                          {card.childCount ? <span className="chip whitespace-nowrap bg-secondary-tint text-secondary">{t("subProgress", { done: card.childDone, total: card.childCount })}</span> : null}
                         </div>
                       </td>
                       <td className="px-3 py-2.5"><span className={`chip whitespace-nowrap ${STATUS_TONE[card.status]}`}>{t(`status.${card.status}`)}</span></td>
                       <td className="truncate px-3 py-2.5 text-muted">{card.targets.join(", ")}</td>
                       <td className="truncate px-3 py-2.5">{card.ownerName ?? ""}</td>
                       <td className="truncate px-3 py-2.5">{card.vendorName ?? ""}</td>
-                      <td className={`whitespace-nowrap px-3 py-2.5 ${card.dateConflict ? "font-semibold text-brick" : ""}`}>{formatDate(card.start_date, locale)}</td>
+                      <td className={`whitespace-nowrap px-3 py-2.5 ${card.dateConflict ? "font-semibold text-primary" : ""}`}>{formatDate(card.start_date, locale)}</td>
                       <td className="whitespace-nowrap px-3 py-2.5">{formatDate(card.end_date, locale)}</td>
                       <td className="whitespace-nowrap px-3 py-2.5 text-right">{formatEur(card.estimate_eur, locale)}</td>
                       <td className="whitespace-nowrap px-4 py-2.5 text-right">{formatEur(card.forecast_eur, locale)}</td>
