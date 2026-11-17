@@ -5,6 +5,11 @@ import { getMe, getReference } from "@/lib/data";
 import { KEY_DATES, MOVE_IN_DATE } from "@/lib/constants";
 import { innerVolumeM3 } from "@/lib/fit";
 import { RENO_STATUSES, bestCost, formatDate, formatEur, getBoard } from "@/lib/reno";
+import { ActivityChart, type ActivityRow, type ActivityUser } from "@/components/charts/ActivityChart";
+import { StatusDonut } from "@/components/charts/StatusDonut";
+
+const ACTIVITY_DAYS = 30;
+const MAX_NAMED_PEOPLE = 4; // more people fold into "Overig" (fixed series colors)
 
 function daysUntil(iso: string): number {
   const today = new Date(new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Amsterdam" }));
@@ -50,6 +55,29 @@ export default async function Dashboard() {
   const renoForecast = reno.reduce((n, c) => n + Number(bestCost(c) ?? 0), 0);
   const renoBlocked = reno.filter((c) => c.status !== "gereed" && c.blockedBy.length).length;
 
+  // Activity per person per day, last 30 days. Colors follow the person (account order), never the rank.
+  const [{ data: activity }, { data: people }] = await Promise.all([
+    supabase.from("activity_daily").select("day, actor_id, added, changed"),
+    supabase.from("profiles").select("id, display_name, email").order("created_at"),
+  ]);
+  const activityDays = Array.from({ length: ACTIVITY_DAYS }, (_, i) => {
+    const d = new Date(`${todayIso}T00:00:00Z`);
+    d.setUTCDate(d.getUTCDate() - (ACTIVITY_DAYS - 1 - i));
+    return d.toISOString().slice(0, 10);
+  });
+  const peopleList = people ?? [];
+  const named = peopleList.slice(0, MAX_NAMED_PEOPLE);
+  const activityUsers: ActivityUser[] = named.map((p, i) => ({ id: p.id, name: p.display_name ?? p.email, color: `var(--series-${i + 1})` }));
+  if (peopleList.length > MAX_NAMED_PEOPLE) activityUsers.push({ id: "other", name: t("others"), color: "var(--series-other)" });
+  const namedIds = new Set(named.map((p) => p.id));
+  const activityRows: ActivityRow[] = (activity ?? []).map((r) => ({
+    day: String(r.day),
+    actor_id: namedIds.has(r.actor_id) ? r.actor_id : "other",
+    added: Number(r.added),
+    changed: Number(r.changed),
+  }));
+  const statusSlices = RENO_STATUSES.map((s) => ({ key: s, label: tr(`status.${s}`), count: reno.filter((c) => c.status === s).length, color: `var(--status-${s})` }));
+
   const days = daysUntil(MOVE_IN_DATE);
   const fmt = new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "nl-NL", { day: "numeric", month: "short", year: "numeric" });
   const name = me?.display_name ?? "";
@@ -71,7 +99,7 @@ export default async function Dashboard() {
         <p className="mt-1 text-[15px] text-muted">{t("toMoveIn", { date: fmt.format(new Date(MOVE_IN_DATE)) })}</p>
       </section>
 
-      <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 md:grid-cols-4 [animation:rise-in_500ms_both]">
         {stats.map((s) => (
           <Link key={s.label} href={s.href} className="card p-4 hover:border-primary">
             <span className="block text-sm text-muted">{s.label}</span>
@@ -79,6 +107,15 @@ export default async function Dashboard() {
           </Link>
         ))}
       </section>
+
+      <div className="grid gap-6 xl:grid-cols-3">
+        <section className="card p-5 [animation:rise-in_500ms_120ms_both] xl:col-span-2">
+          <ActivityChart days={activityDays} users={activityUsers} rows={activityRows} />
+        </section>
+        <section className="card p-5 [animation:rise-in_500ms_200ms_both]">
+          <StatusDonut slices={statusSlices} href="/verbouwing" />
+        </section>
+      </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <section className="card p-5">
@@ -116,10 +153,6 @@ export default async function Dashboard() {
           <Link href="/verbouwing" className="text-sm font-semibold text-primary hover:underline">{tr("openBoard")}</Link>
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
-          {RENO_STATUSES.map((s) => {
-            const n = reno.filter((c) => c.status === s).length;
-            return n ? <span key={s} className="chip bg-ink/5 py-1 text-[13px] text-ink">{tr(`status.${s}`)}: {n}</span> : null;
-          })}
           {renoBlocked ? <span className="chip bg-primary py-1 text-[13px] text-on-primary">{tr("blockedCount", { count: renoBlocked })}</span> : null}
           {renoForecast ? <span className="chip bg-secondary-tint py-1 text-[13px] text-secondary">{tr("expected")} {formatEur(renoForecast, locale)}</span> : null}
         </div>
