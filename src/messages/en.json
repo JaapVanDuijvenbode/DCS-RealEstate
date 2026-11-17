@@ -6,7 +6,9 @@
     "boxes": "Boxes",
     "labels": "Labels",
     "more": "More",
-    "renovation": "Renovation"
+    "renovation": "Renovation",
+    "collapse": "Collapse menu",
+    "expand": "Expand menu"
   },
   "auth": {
     "title": "Sign in",
@@ -64,7 +66,29 @@
     "keyDates": "Key dates",
     "stages": "Stages",
     "volume": "Volume per disposition",
-    "volumeEmpty": "No dimensions entered yet."
+    "volumeEmpty": "No dimensions entered yet.",
+    "activityTitle": "Activity per person",
+    "activitySubtitle": {
+      "all": "{count, plural, one {# addition or change} other {# additions and changes}} in the last 30 days",
+      "added": "{count, plural, one {# addition} other {# additions}} in the last 30 days",
+      "changed": "{count, plural, one {# change} other {# changes}} in the last 30 days"
+    },
+    "activityMode": "Type of activity",
+    "activityModes": {
+      "all": "All",
+      "added": "Added",
+      "changed": "Changed"
+    },
+    "activityEmpty": "No activity in the last 30 days yet.",
+    "total": "Total",
+    "date": "Date",
+    "showTable": "Show as table",
+    "others": "Other",
+    "statusTitle": "Renovation by status",
+    "toBoard": "Open board",
+    "statusEmpty": "No renovation projects yet.",
+    "projects": "{count, plural, one {project} other {projects}}",
+    "axisToday": "Today"
   },
   "keyDates": {
     "earlyAccess": "Early access Nieuwe Rijn 98",

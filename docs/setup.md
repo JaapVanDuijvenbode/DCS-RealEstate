@@ -16,6 +16,8 @@ This creates the tables, the security rules, the private `photos` storage bucket
 - `20261117090000_r4_renovation.sql`: projects, sub-items, dependencies, suppliers, building elements, mood boards and subsidies.
 - `20261117090100_r4_starter_projects.sql` (optional): starter projects from the PRD, such as the foundation survey (due 15 December 2026) and the priority rooms for move-in, without any amounts. Skip it if you prefer an empty board.
 
+**Dashboard charts:** run `20261117210000_activity_log.sql`. It adds the `activity_log` table, the triggers that record additions, changes and deletions per user, and the `activity_daily` view behind the activity chart. It also backfills the last 31 days from existing creation dates and status history, so the chart is not empty on day one.
+
 With the CLI, `supabase db push` applies only the migrations that have not run yet.
 
 ## 2. Authentication (Supabase)

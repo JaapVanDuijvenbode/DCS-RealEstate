@@ -36,6 +36,21 @@
   --glow-2: rgb(237 142 65 / 0.42);
   --glow-3: rgb(194 59 75 / 0.28);
   --glow-4: rgb(147 43 73 / 0.3);
+
+  /* Chart series (validated with the dataviz palette checks, light surface).
+     People: fixed order by account age. Status: one color per renovation status. */
+  --series-1: #c03a4a;
+  --series-2: #bd871c;
+  --series-3: #892f59;
+  --series-4: #cb6620;
+  --series-other: #8f8a8c;
+  --status-idee: #8668b6;
+  --status-te_onderzoeken: #c0851f;
+  --status-gepland: #c03a4a;
+  --status-in_uitvoering: #009083;
+  --status-wacht: #d26c28;
+  --status-gereed: #892f59;
+  --chart-grid: rgb(43 21 32 / 0.08);
 }
 
 :root[data-theme="dark"] {
@@ -63,6 +78,20 @@
   --glow-2: rgb(237 142 65 / 0.2);
   --glow-3: rgb(194 59 75 / 0.3);
   --glow-4: rgb(147 43 73 / 0.45);
+
+  /* Chart series, dark surface */
+  --series-1: #d24b58;
+  --series-2: #b68b16;
+  --series-3: #983c75;
+  --series-4: #d0792a;
+  --series-other: #8f8a8c;
+  --status-idee: #9274c3;
+  --status-te_onderzoeken: #b68b16;
+  --status-gepland: #cb4453;
+  --status-in_uitvoering: #009c8f;
+  --status-wacht: #d27830;
+  --status-gereed: #983c75;
+  --chart-grid: rgb(255 255 255 / 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -91,6 +120,20 @@
     --glow-2: rgb(237 142 65 / 0.2);
     --glow-3: rgb(194 59 75 / 0.3);
     --glow-4: rgb(147 43 73 / 0.45);
+
+    /* Chart series, dark surface */
+    --series-1: #d24b58;
+    --series-2: #b68b16;
+    --series-3: #983c75;
+    --series-4: #d0792a;
+    --series-other: #8f8a8c;
+    --status-idee: #9274c3;
+    --status-te_onderzoeken: #b68b16;
+    --status-gepland: #cb4453;
+    --status-in_uitvoering: #009c8f;
+    --status-wacht: #d27830;
+    --status-gereed: #983c75;
+    --chart-grid: rgb(255 255 255 / 0.08);
   }
 }
 
@@ -177,5 +220,24 @@ body {
 @media (prefers-reduced-transparency: reduce) {
   :root {
     --surface: var(--surface-strong);
+  }
+}
+
+/* Motion: entrance for navigation and charts; off when the user asks for less motion. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }

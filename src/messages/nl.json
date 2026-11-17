@@ -6,7 +6,9 @@
     "boxes": "Dozen",
     "labels": "Etiketten",
     "more": "Meer",
-    "renovation": "Verbouwing"
+    "renovation": "Verbouwing",
+    "collapse": "Menu inklappen",
+    "expand": "Menu uitklappen"
   },
   "auth": {
     "title": "Inloggen",
@@ -64,7 +66,29 @@
     "keyDates": "Belangrijke data",
     "stages": "Fasen",
     "volume": "Volume per bestemming",
-    "volumeEmpty": "Nog geen afmetingen ingevoerd."
+    "volumeEmpty": "Nog geen afmetingen ingevoerd.",
+    "activityTitle": "Activiteit per persoon",
+    "activitySubtitle": {
+      "all": "{count, plural, one {# toevoeging of wijziging} other {# toevoegingen en wijzigingen}} in de laatste 30 dagen",
+      "added": "{count, plural, one {# toevoeging} other {# toevoegingen}} in de laatste 30 dagen",
+      "changed": "{count, plural, one {# wijziging} other {# wijzigingen}} in de laatste 30 dagen"
+    },
+    "activityMode": "Soort activiteit",
+    "activityModes": {
+      "all": "Alles",
+      "added": "Toegevoegd",
+      "changed": "Gewijzigd"
+    },
+    "activityEmpty": "Nog geen activiteit in de laatste 30 dagen.",
+    "total": "Totaal",
+    "date": "Datum",
+    "showTable": "Toon als tabel",
+    "others": "Overig",
+    "statusTitle": "Verbouwing per status",
+    "toBoard": "Naar planbord",
+    "statusEmpty": "Nog geen verbouwingsprojecten.",
+    "projects": "{count, plural, one {project} other {projecten}}",
+    "axisToday": "Vandaag"
   },
   "keyDates": {
     "earlyAccess": "Vroege toegang Nieuwe Rijn 98",
