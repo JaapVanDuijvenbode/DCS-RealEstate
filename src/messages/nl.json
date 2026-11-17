@@ -183,7 +183,13 @@
     "photoBusy": "Foto verkleinen…",
     "location": "Locatie",
     "all": "Alle",
-    "filter": "Filteren"
+    "filter": "Filteren",
+    "viewPhoto": "Foto {current} van {total} bekijken",
+    "close": "Sluiten",
+    "previous": "Vorige foto",
+    "next": "Volgende foto",
+    "openOriginal": "Origineel openen",
+    "photoOf": "Foto {current} van {total}"
   },
   "fit": {
     "title": "Past het in een doos?",
@@ -470,6 +476,7 @@
     "vendor": "Leverancier",
     "price": "Prijs (€)",
     "productLink": "Productlink (optioneel)",
-    "note": "Notitie (optioneel)"
+    "note": "Notitie (optioneel)",
+    "viewPhoto": "Foto bekijken {title}"
   }
 }

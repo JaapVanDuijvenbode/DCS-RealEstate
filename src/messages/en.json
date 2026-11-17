@@ -183,7 +183,13 @@
     "photoBusy": "Resizing photo…",
     "location": "Location",
     "all": "All",
-    "filter": "Filter"
+    "filter": "Filter",
+    "viewPhoto": "View photo {current} of {total}",
+    "close": "Close",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "openOriginal": "Open original",
+    "photoOf": "Photo {current} of {total}"
   },
   "fit": {
     "title": "Does it fit in a box?",
@@ -470,6 +476,7 @@
     "vendor": "Supplier",
     "price": "Price (€)",
     "productLink": "Product link (optional)",
-    "note": "Note (optional)"
+    "note": "Note (optional)",
+    "viewPhoto": "View photo {title}"
   }
 }

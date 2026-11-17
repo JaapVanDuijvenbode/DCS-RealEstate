@@ -5,6 +5,7 @@ import { addMoodItem, deleteMoodItem, setMoodVerdict } from "@/app/(app)/verbouw
 import { PhotoInput } from "@/components/PhotoInput";
 import { SubmitButton } from "@/components/SubmitButton";
 import { getMe } from "@/lib/data";
+import { LightboxProvider, LightboxTrigger, type LightboxImage } from "@/components/Lightbox";
 
 type Props = { kind: "room" | "element" | "project"; targetId: string; back: string; title?: string };
 
@@ -49,6 +50,18 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
   const signed = paths.length ? (await supabase.storage.from("photos").createSignedUrls(paths, 3600)).data ?? [] : [];
   const urlByPath = new Map(signed.map((s) => [s.path, s.signedUrl]));
 
+  // All photos of this board, in display order, for the lightbox.
+  const gallery: LightboxImage[] = [];
+  const galleryIndex = new Map<string, number>();
+  for (const m of items) {
+    const src = m.kind === "image" && m.storage_path ? urlByPath.get(m.storage_path) : null;
+    if (!src) continue;
+    galleryIndex.set(m.id, gallery.length);
+    const vendor = vendorById.get(m.vendor_id ?? "");
+    const caption = [m.title, m.note, vendor?.name, t(`verdict.${m.verdict}`)].filter(Boolean).join(" · ");
+    gallery.push({ src, alt: m.title ?? "", caption });
+  }
+
   const hidden = (
     <>
       <input type="hidden" name="target_kind" value={kind} />
@@ -67,6 +80,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
       {items.length === 0 ? (
         <p className="text-sm text-muted">{t("empty")}</p>
       ) : (
+        <LightboxProvider images={gallery}>
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {items.map((m) => {
             const img = m.storage_path ? urlByPath.get(m.storage_path) : null;
@@ -74,10 +88,10 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
             return (
               <li key={m.id} className={`card flex flex-col overflow-hidden ${m.verdict === "afgewezen" ? "opacity-60" : ""}`}>
                 {m.kind === "image" && img ? (
-                  <a href={img} target="_blank" rel="noreferrer" className="block aspect-[4/3] bg-ink/5">
+                  <LightboxTrigger index={galleryIndex.get(m.id) ?? 0} label={t("viewPhoto", { title: m.title ?? "" })} className="aspect-[4/3] bg-ink/5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img} alt={m.title ?? ""} className="h-full w-full object-cover" loading="lazy" />
-                  </a>
+                    <img src={img} alt={m.title ?? ""} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                  </LightboxTrigger>
                 ) : null}
                 {m.kind === "color" ? (
                   <div className="flex aspect-[4/3] items-end p-3" style={{ background: m.color_hex ?? "var(--line)" }}>
@@ -139,6 +153,7 @@ export async function MoodBoard({ kind, targetId, back, title }: Props) {
             );
           })}
         </ul>
+        </LightboxProvider>
       )}
 
       <div className="grid gap-3 md:grid-cols-2">
