@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { cookies } from "next/headers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { THEME_COOKIE } from "@/lib/theme";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/plus-jakarta-sans";
@@ -32,6 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} data-theme={theme === "light" || theme === "dark" ? theme : undefined}>
       <body className="min-h-dvh text-ink">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
