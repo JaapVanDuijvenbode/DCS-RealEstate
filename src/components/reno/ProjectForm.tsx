@@ -84,7 +84,7 @@ export async function ProjectForm({ project, defaults = {}, targetIds = [], pare
       </section>
 
       <section className="card space-y-3 p-5">
-        <h2 className="font-serif text-lg font-semibold">{t("planning")}</h2>
+        <h2 className="font-display text-lg font-semibold">{t("planning")}</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label className="label" htmlFor="start_date">{t("start")}</label>
@@ -112,14 +112,14 @@ export async function ProjectForm({ project, defaults = {}, targetIds = [], pare
       </section>
 
       <details className="card p-5" open={selected.size > 0 || !project}>
-        <summary className="cursor-pointer font-serif text-lg font-semibold">{t("targets")}{selected.size ? ` (${selected.size})` : ""}</summary>
+        <summary className="cursor-pointer font-display text-lg font-semibold">{t("targets")}{selected.size ? ` (${selected.size})` : ""}</summary>
         <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {floors.map((f) => (
             <fieldset key={f.key}>
               <legend className="mb-1 text-sm font-semibold text-muted">{f.label}</legend>
               {f.rooms.map((r) => (
                 <label key={r.id} className="flex min-h-9 items-center gap-2 text-[15px]">
-                  <input type="checkbox" name="room_ids" value={r.id} defaultChecked={selected.has(r.id)} className="h-5 w-5 accent-[var(--brick)]" />
+                  <input type="checkbox" name="room_ids" value={r.id} defaultChecked={selected.has(r.id)} className="h-5 w-5 accent-[var(--primary)]" />
                   {roomLabel(r, locale)}
                 </label>
               ))}
@@ -129,7 +129,7 @@ export async function ProjectForm({ project, defaults = {}, targetIds = [], pare
             <legend className="mb-1 text-sm font-semibold text-muted">{t("elements")}</legend>
             {elements.map((e) => (
               <label key={e.id} className="flex min-h-9 items-center gap-2 text-[15px]">
-                <input type="checkbox" name="element_ids" value={e.id} defaultChecked={selected.has(e.id)} className="h-5 w-5 accent-[var(--brick)]" />
+                <input type="checkbox" name="element_ids" value={e.id} defaultChecked={selected.has(e.id)} className="h-5 w-5 accent-[var(--primary)]" />
                 {elementLabel(e, locale)}
               </label>
             ))}
@@ -138,7 +138,7 @@ export async function ProjectForm({ project, defaults = {}, targetIds = [], pare
       </details>
 
       <details className="card p-5" open={!!(p.estimate_eur || p.quote_eur || p.contract_eur)}>
-        <summary className="cursor-pointer font-serif text-lg font-semibold">{t("costs")}</summary>
+        <summary className="cursor-pointer font-display text-lg font-semibold">{t("costs")}</summary>
         <p className="mt-1 text-sm text-muted">{t("costsHint")}</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {(["estimate_eur", "quote_eur", "contract_eur", "actual_eur", "forecast_eur"] as const).map((k) => (
@@ -161,7 +161,7 @@ export async function ProjectForm({ project, defaults = {}, targetIds = [], pare
       </details>
 
       <details className="card p-5" open={p.permit_required === "ja"}>
-        <summary className="cursor-pointer font-serif text-lg font-semibold">{t("monument")}</summary>
+        <summary className="cursor-pointer font-display text-lg font-semibold">{t("monument")}</summary>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div>
             <label className="label" htmlFor="monument_impact">{t("impactLabel")}</label>

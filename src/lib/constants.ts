@@ -21,11 +21,12 @@ export const SALE_STATUSES = ["te_koop", "gereserveerd", "verkocht", "opgehaald"
 
 export const CATEGORIES = ["meubel", "apparaat", "elektronica", "verlichting", "decoratie", "tuin", "gereedschap", "overig"] as const;
 
-// Label band colour per destination floor at Nieuwe Rijn 98 (palette B).
+// Label band colour per destination floor at Nieuwe Rijn 98 (LayeredCake palette,
+// darkened where needed so white text stays readable on print).
 export const FLOOR_COLORS: Record<string, string> = {
-  BG: "#2F5D50",
-  "1E": "#9A3B28",
-  "2E": "#7A5A12",
-  ZO: "#4A4F57",
-  EXT: "#4A4F57",
+  BG: "#932B49",
+  "1E": "#C23B4B",
+  "2E": "#8A4316",
+  ZO: "#671343",
+  EXT: "#6B5160",
 };

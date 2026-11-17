@@ -4,6 +4,10 @@ Planning app for the move from Pioenroos 7 (Voorhout) and the Menken office and 
 
 Product requirements: PRD v1.0, 14 November 2026 (Claude Docs, "PRD: Verhuis- & Verbouwplanner").
 
+## Look and feel
+
+LayeredCake brand ("Make Our Venture Exciting", shown on the sign-in screens): honey `#F4C34B`, tangerine `#ED8E41`, raspberry `#C23B4B`, plum `#932B49` and deep plum `#671343`, with the layered-cake app icon. Raspberry is the action color, plum the status color; honey and tangerine are accents only, because white text on them is not readable. Headings use Plus Jakarta Sans, body text Inter. Panels are frosted glass over a warm gradient, in light and dark mode (follows the device, or set manually under Instellingen > Weergave), with a solid fallback when the device asks for reduced transparency.
+
 ## Release 1 (target 11 December 2026)
 
 - **Sign-in:** invite-only accounts, username or e-mail plus password, then a 6-digit e-mail code on a new device or after 30 days.
@@ -32,7 +36,7 @@ Still to come: scanning runs and exceptions (R2), dashboard timeline and comment
 
 | Part | Choice |
 | --- | --- |
-| App | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4 |
+| App | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4, Plus Jakarta Sans and Inter |
 | Language | next-intl, `nl` default, `en` switch per user (cookie) |
 | Data | Supabase PostgreSQL with Row Level Security, Supabase Storage (private `photos` bucket) |
 | E-mail | Resend (sign-in codes) and Supabase Auth with Resend SMTP (invitations, password reset) |

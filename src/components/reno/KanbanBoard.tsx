@@ -42,12 +42,12 @@ export type KanbanCard = {
 };
 
 const COLUMN_TONE: Record<string, string> = {
-  idee: "bg-line",
-  te_onderzoeken: "bg-zinc",
-  gepland: "bg-brick",
-  in_uitvoering: "bg-canal",
-  wacht: "bg-[#C46A4E]",
-  gereed: "bg-canal",
+  idee: "bg-quiet",
+  te_onderzoeken: "bg-honey",
+  gepland: "bg-primary",
+  in_uitvoering: "bg-tangerine",
+  wacht: "bg-plum-deep",
+  gereed: "bg-secondary",
 };
 
 function CardBody({ card }: { card: KanbanCard }) {
@@ -61,11 +61,11 @@ function CardBody({ card }: { card: KanbanCard }) {
       {card.parentTitle ? <p className="truncate text-xs text-muted">↳ {card.parentTitle}</p> : null}
       <p className="text-[15px] font-semibold leading-snug">{card.title}</p>
       <div className="flex flex-wrap gap-1.5">
-        <span className="chip bg-ground text-ink">{t(`phaseShort.${card.phase}`)}</span>
-        {card.priority === "hoog" ? <span className="chip bg-brick-tint text-brick">{t("priority.hoog")}</span> : null}
-        {card.blocked ? <span className="chip bg-brick text-on-brick">{t("blocked")}</span> : null}
-        {card.dateConflict ? <span className="chip bg-brick-tint text-brick">{t("dateConflictShort")}</span> : null}
-        {card.childCount > 0 ? <span className="chip bg-canal-tint text-canal">{t("subProgress", { done: card.childDone, total: card.childCount })}</span> : null}
+        <span className="chip bg-ink/5 text-ink">{t(`phaseShort.${card.phase}`)}</span>
+        {card.priority === "hoog" ? <span className="chip bg-primary-tint text-primary">{t("priority.hoog")}</span> : null}
+        {card.blocked ? <span className="chip bg-primary text-on-primary">{t("blocked")}</span> : null}
+        {card.dateConflict ? <span className="chip bg-primary-tint text-primary">{t("dateConflictShort")}</span> : null}
+        {card.childCount > 0 ? <span className="chip bg-secondary-tint text-secondary">{t("subProgress", { done: card.childDone, total: card.childCount })}</span> : null}
       </div>
       {card.targets.length > 0 ? (
         <p className="truncate text-sm text-muted">
@@ -78,7 +78,7 @@ function CardBody({ card }: { card: KanbanCard }) {
         <span className="flex shrink-0 items-center gap-2">
           {card.costLabel ? <span className="font-semibold">{card.costLabel}</span> : null}
           {card.ownerInitials ? (
-            <span title={card.ownerName ?? ""} className="flex h-7 w-7 items-center justify-center rounded-full bg-brick text-[11px] font-semibold text-on-brick">
+            <span title={card.ownerName ?? ""} className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-on-primary">
               {card.ownerInitials}
             </span>
           ) : null}
@@ -101,7 +101,7 @@ function DraggableCard({ card, dimmed }: { card: KanbanCard; dimmed: boolean }) 
       {...drag.attributes}
       {...drag.listeners}
       aria-roledescription={t("draggable")}
-      className={`card relative touch-manipulation p-3 outline-none focus-visible:ring-2 focus-visible:ring-brick ${dimmed ? "opacity-30" : ""} ${drop.isOver ? "ring-2 ring-brick/50" : ""}`}
+      className={`relative touch-manipulation rounded-2xl border border-line bg-surface-strong p-3 shadow-[0_6px_18px_-12px_rgb(103_19_67_/_0.35)] outline-none focus-visible:ring-2 focus-visible:ring-primary ${dimmed ? "opacity-30" : ""} ${drop.isOver ? "ring-2 ring-primary/50" : ""}`}
     >
       <Link href={`/verbouwing/${card.id}`} className="block" draggable={false} onClick={(e) => drag.isDragging && e.preventDefault()}>
         <CardBody card={card} />
@@ -117,7 +117,7 @@ function Column({ status, cards, activeId, onAddHref }: { status: string; cards:
     <section
       ref={setNodeRef}
       aria-label={t(`status.${status}`)}
-      className={`flex w-[82vw] shrink-0 snap-start flex-col rounded-2xl border border-line bg-ground/60 p-2 sm:w-72 ${isOver ? "border-brick" : ""}`}
+      className={`flex w-[82vw] shrink-0 snap-start flex-col glass rounded-3xl p-2 sm:w-72 ${isOver ? "ring-2 ring-primary/40" : ""}`}
     >
       <header className="flex items-center justify-between px-2 py-2">
         <span className="flex items-center gap-2 text-sm font-semibold">
@@ -131,7 +131,7 @@ function Column({ status, cards, activeId, onAddHref }: { status: string; cards:
           <DraggableCard key={c.id} card={c} dimmed={activeId === c.id} />
         ))}
       </ul>
-      <Link href={onAddHref} className="mt-2 rounded-lg px-2 py-2 text-sm font-semibold text-brick hover:bg-surface">
+      <Link href={onAddHref} className="mt-2 rounded-lg px-2 py-2 text-sm font-semibold text-primary hover:bg-surface-strong">
         + {t("addHere")}
       </Link>
     </section>
@@ -210,7 +210,7 @@ export function KanbanBoard({ statuses, initialCards }: { statuses: readonly str
   return (
     <div>
       {error ? (
-        <p role="alert" className="mb-3 rounded-lg bg-brick-tint px-3 py-2 text-sm">{error}</p>
+        <p role="alert" className="mb-3 rounded-lg bg-primary-tint px-3 py-2 text-sm">{error}</p>
       ) : null}
       <p className="mb-3 text-sm text-muted">{t("dragHint")}</p>
       <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragCancel={() => setActiveId(null)}>
@@ -221,7 +221,7 @@ export function KanbanBoard({ statuses, initialCards }: { statuses: readonly str
         </div>
         <DragOverlay>
           {active ? (
-            <div className="card w-72 rotate-1 p-3 shadow-lg">
+            <div className="w-72 rotate-1 rounded-2xl border border-line bg-surface-strong p-3 shadow-xl">
               <CardBody card={active} />
             </div>
           ) : null}

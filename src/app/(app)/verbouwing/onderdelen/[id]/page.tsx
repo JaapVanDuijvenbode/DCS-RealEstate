@@ -14,9 +14,9 @@ export default async function ElementPage({ params }: { params: Promise<{ id: st
   if (!element) notFound();
   return (
     <div className="space-y-6">
-      <Link href="/verbouwing/ruimtes" className="text-sm text-brick">← {t("roomsAndElements")}</Link>
+      <Link href="/verbouwing/ruimtes" className="text-sm text-primary">← {t("roomsAndElements")}</Link>
       <div>
-        <h1 className="font-serif text-3xl font-semibold">{elementLabel(element, locale)}</h1>
+        <h1 className="font-display text-3xl font-semibold">{elementLabel(element, locale)}</h1>
         <p className="mt-1 text-muted">Nieuwe Rijn 98 · {t("element")}</p>
       </div>
       <TargetProjects targetId={element.id} />

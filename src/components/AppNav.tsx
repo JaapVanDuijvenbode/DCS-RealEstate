@@ -30,7 +30,7 @@ export function AppNav({ variant }: { variant: "side" | "bottom" }) {
               key={it.href}
               href={it.href}
               aria-current={active ? "page" : undefined}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium ${active ? "bg-brick-tint text-brick" : "text-ink hover:bg-surface"}`}
+              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] font-medium transition-colors ${active ? "bg-primary text-on-primary shadow-[0_8px_20px_-12px_var(--primary)]" : "text-ink hover:bg-surface-strong"}`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{it.icon}</svg>
               {t(it.key)}
@@ -40,7 +40,7 @@ export function AppNav({ variant }: { variant: "side" | "bottom" }) {
       </nav>
     );
   return (
-    <nav aria-label={t("label")} className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-surface px-1 pb-[max(env(safe-area-inset-bottom),8px)] pt-1 md:hidden">
+    <nav aria-label={t("label")} className="glass fixed inset-x-2 bottom-2 z-20 flex rounded-2xl px-1 pb-[max(env(safe-area-inset-bottom),8px)] pt-1 md:hidden">
       {items.filter((it) => !("desktopOnly" in it)).map((it) => {
         const active = isActive(path, it.href);
         return (
@@ -48,7 +48,7 @@ export function AppNav({ variant }: { variant: "side" | "bottom" }) {
             key={it.href}
             href={it.href}
             aria-current={active ? "page" : undefined}
-            className={`flex min-h-14 flex-1 flex-col items-center justify-center gap-1 text-[11px] ${active ? "font-semibold text-brick" : "font-medium text-muted"}`}
+            className={`flex min-h-14 flex-1 flex-col items-center justify-center gap-1 text-[11px] ${active ? "font-semibold text-primary" : "font-medium text-muted"}`}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{it.icon}</svg>
             {t(it.key)}

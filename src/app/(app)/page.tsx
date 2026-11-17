@@ -65,7 +65,7 @@ export default async function Dashboard() {
     <div className="space-y-6">
       <section>
         <p className="text-sm text-muted">{t("greeting", { name })}</p>
-        <h1 className="mt-1 font-serif text-4xl font-semibold leading-tight">
+        <h1 className="mt-1 font-display text-4xl font-semibold leading-tight">
           {days > 0 ? t("daysLeft", { days }) : days === 0 ? t("today") : t("moved")}
         </h1>
         <p className="mt-1 text-[15px] text-muted">{t("toMoveIn", { date: fmt.format(new Date(MOVE_IN_DATE)) })}</p>
@@ -73,9 +73,9 @@ export default async function Dashboard() {
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {stats.map((s) => (
-          <Link key={s.label} href={s.href} className="card p-4 hover:border-brick">
+          <Link key={s.label} href={s.href} className="card p-4 hover:border-primary">
             <span className="block text-sm text-muted">{s.label}</span>
-            <span className={`mt-1 block font-serif text-3xl font-semibold ${s.warn ? "text-brick" : ""}`}>{s.value}</span>
+            <span className={`mt-1 block font-display text-3xl font-semibold ${s.warn ? "text-primary" : ""}`}>{s.value}</span>
           </Link>
         ))}
       </section>
@@ -86,8 +86,8 @@ export default async function Dashboard() {
           <ul className="mt-2 divide-y divide-line">
             {KEY_DATES.map((d) => (
               <li key={d.key} className="flex items-center gap-3 py-2.5">
-                <span aria-hidden="true" className={`h-2.5 w-2.5 shrink-0 rounded-full ${"highlight" in d ? "bg-brick" : "bg-line"}`} />
-                <span className="w-24 shrink-0 text-sm font-semibold">{fmt.format(new Date(d.date))}</span>
+                <span aria-hidden="true" className={`h-2.5 w-2.5 shrink-0 rounded-full ${"highlight" in d ? "bg-primary" : "bg-line"}`} />
+                <span className="w-[6.75rem] shrink-0 whitespace-nowrap text-sm font-semibold">{fmt.format(new Date(d.date))}</span>
                 <span className={`text-[15px] ${"highlight" in d ? "font-semibold" : ""}`}>{td(d.key)}</span>
               </li>
             ))}
@@ -113,21 +113,21 @@ export default async function Dashboard() {
       <section className="card p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">{tr("title")}</h2>
-          <Link href="/verbouwing" className="text-sm font-semibold text-brick hover:underline">{tr("openBoard")}</Link>
+          <Link href="/verbouwing" className="text-sm font-semibold text-primary hover:underline">{tr("openBoard")}</Link>
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
           {RENO_STATUSES.map((s) => {
             const n = reno.filter((c) => c.status === s).length;
-            return n ? <span key={s} className="chip bg-ground py-1 text-[13px] text-ink">{tr(`status.${s}`)}: {n}</span> : null;
+            return n ? <span key={s} className="chip bg-ink/5 py-1 text-[13px] text-ink">{tr(`status.${s}`)}: {n}</span> : null;
           })}
-          {renoBlocked ? <span className="chip bg-brick py-1 text-[13px] text-on-brick">{tr("blockedCount", { count: renoBlocked })}</span> : null}
-          {renoForecast ? <span className="chip bg-canal-tint py-1 text-[13px] text-canal">{tr("expected")} {formatEur(renoForecast, locale)}</span> : null}
+          {renoBlocked ? <span className="chip bg-primary py-1 text-[13px] text-on-primary">{tr("blockedCount", { count: renoBlocked })}</span> : null}
+          {renoForecast ? <span className="chip bg-secondary-tint py-1 text-[13px] text-secondary">{tr("expected")} {formatEur(renoForecast, locale)}</span> : null}
         </div>
         {upcoming.length ? (
           <ul className="mt-3 divide-y divide-line">
             {upcoming.map((c) => (
               <li key={c.id} className="flex items-baseline justify-between gap-3 py-2.5">
-                <Link href={`/verbouwing/${c.id}`} className="min-w-0 truncate text-[15px] hover:text-brick">{c.title}</Link>
+                <Link href={`/verbouwing/${c.id}`} className="min-w-0 truncate text-[15px] hover:text-primary">{c.title}</Link>
                 <span className="shrink-0 text-sm text-muted">{formatDate(c.end_date, locale)}</span>
               </li>
             ))}

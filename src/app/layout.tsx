@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
+import { cookies } from "next/headers";
+import { THEME_COOKIE } from "@/lib/theme";
 import "@fontsource-variable/inter";
-import "@fontsource-variable/fraunces";
+import "@fontsource-variable/plus-jakarta-sans";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,8 +18,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f0e7" },
-    { media: "(prefers-color-scheme: dark)", color: "#1c1816" },
+    { media: "(prefers-color-scheme: light)", color: "#fff6ee" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c0d16" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -25,9 +27,10 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
+  const theme = (await cookies()).get(THEME_COOKIE)?.value;
   return (
-    <html lang={locale}>
-      <body className="min-h-dvh bg-ground text-ink">
+    <html lang={locale} data-theme={theme === "light" || theme === "dark" ? theme : undefined}>
+      <body className="min-h-dvh text-ink">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>

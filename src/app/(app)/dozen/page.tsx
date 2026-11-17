@@ -30,7 +30,7 @@ export default async function BoxesPage({ searchParams }: { searchParams: Promis
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-serif text-3xl font-semibold">{tb("title")}</h1>
+        <h1 className="font-display text-3xl font-semibold">{tb("title")}</h1>
         {boxes.length > 0 ? <a href={`/api/labels?${params.toString()}`} className="btn-secondary">{tb("printSelection", { count: boxes.length })}</a> : null}
       </div>
 
@@ -50,7 +50,7 @@ export default async function BoxesPage({ searchParams }: { searchParams: Promis
           </select>
         </div>
         <label className="flex items-end gap-2 pb-3 text-[15px]">
-          <input type="checkbox" name="missing" value="1" defaultChecked={!!sp.missing} className="h-5 w-5 accent-[var(--brick)]" />
+          <input type="checkbox" name="missing" value="1" defaultChecked={!!sp.missing} className="h-5 w-5 accent-[var(--primary)]" />
           {tb("missingDest")}
         </label>
         <div className="flex items-end">
@@ -67,7 +67,7 @@ export default async function BoxesPage({ searchParams }: { searchParams: Promis
             const dest = roomById.get(b.dest_room_id ?? "");
             return (
               <li key={b.id}>
-                <Link href={`/d/${b.code}`} className="flex items-center justify-between gap-3 px-4 py-3 hover:text-brick">
+                <Link href={`/d/${b.code}`} className="flex items-center justify-between gap-3 px-4 py-3 hover:text-primary">
                   <span className="min-w-0">
                     <span className="block font-semibold">{b.code}</span>
                     <span className="block truncate text-sm text-muted">

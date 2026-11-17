@@ -49,7 +49,7 @@ export async function VendorForm({ vendor }: { vendor?: Vendor | null }) {
         </select>
       </div>
       <label className="flex items-center gap-2 self-end pb-3 text-[15px]">
-        <input type="checkbox" name="monument_experience" defaultChecked={v?.monument_experience ?? false} className="h-5 w-5 accent-[var(--brick)]" />
+        <input type="checkbox" name="monument_experience" defaultChecked={v?.monument_experience ?? false} className="h-5 w-5 accent-[var(--primary)]" />
         {t("monumentExperience")}
       </label>
       <div className="sm:col-span-2">

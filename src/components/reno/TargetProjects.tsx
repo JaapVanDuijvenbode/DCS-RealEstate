@@ -11,8 +11,8 @@ export async function TargetProjects({ targetId }: { targetId: string }) {
   return (
     <section className="card space-y-3 p-5">
       <div className="flex items-baseline justify-between gap-3">
-        <h2 className="font-serif text-xl font-semibold">{t("projectsHere")}</h2>
-        <Link href={`/verbouwing/nieuw?target=${targetId}`} className="text-sm font-semibold text-brick hover:underline">+ {t("newProject")}</Link>
+        <h2 className="font-display text-xl font-semibold">{t("projectsHere")}</h2>
+        <Link href={`/verbouwing/nieuw?target=${targetId}`} className="text-sm font-semibold text-primary hover:underline">+ {t("newProject")}</Link>
       </div>
       {projects.length === 0 ? (
         <p className="text-sm text-muted">{t("noProjectsHere")}</p>
@@ -21,10 +21,10 @@ export async function TargetProjects({ targetId }: { targetId: string }) {
           {projects.map((p) => (
             <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 py-2.5">
               <span className="min-w-0">
-                <Link href={`/verbouwing/${p.id}`} className="block truncate font-semibold hover:text-brick">{p.title}</Link>
+                <Link href={`/verbouwing/${p.id}`} className="block truncate font-semibold hover:text-primary">{p.title}</Link>
                 <span className="text-sm text-muted">{t(`phase.${p.phase}`)}{p.end_date ? ` · ${formatDate(p.end_date, locale)}` : ""}</span>
               </span>
-              <span className={`chip ${p.status === "gereed" ? "bg-canal text-surface" : "bg-ground text-ink"}`}>{t(`status.${p.status}`)}</span>
+              <span className={`chip ${p.status === "gereed" ? "bg-secondary text-on-primary" : "bg-ink/5 text-ink"}`}>{t(`status.${p.status}`)}</span>
             </li>
           ))}
         </ul>

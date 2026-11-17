@@ -13,7 +13,7 @@ export default async function LabelsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-3xl font-semibold">{t("title")}</h1>
+        <h1 className="font-display text-3xl font-semibold">{t("title")}</h1>
         <p className="mt-1 text-[15px] text-muted">{t("intro")}</p>
       </div>
       {locations
@@ -24,7 +24,7 @@ export default async function LabelsPage() {
           return (
             <section key={loc.id} className="card p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="font-serif text-xl font-semibold">{loc.name}</h2>
+                <h2 className="font-display text-xl font-semibold">{loc.name}</h2>
                 {total > 0 ? <a href={`/api/labels?location=${loc.id}`} className="btn-primary">{t("printAll", { count: total })}</a> : null}
               </div>
               {locRooms.length === 0 ? (

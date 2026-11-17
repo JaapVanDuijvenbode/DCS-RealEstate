@@ -43,32 +43,32 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
 
   return (
     <div className="space-y-6">
-      <Link href="/verbouwing" className="text-sm text-brick">← {t("title")}</Link>
+      <Link href="/verbouwing" className="text-sm text-primary">← {t("title")}</Link>
       {card.parentTitle && card.parent_id ? (
-        <Link href={`/verbouwing/${card.parent_id}`} className="block text-sm text-muted hover:text-brick">↳ {card.parentTitle}</Link>
+        <Link href={`/verbouwing/${card.parent_id}`} className="block text-sm text-muted hover:text-primary">↳ {card.parentTitle}</Link>
       ) : null}
 
       <div className="space-y-2">
-        <h1 className="font-serif text-3xl font-semibold">{card.title}</h1>
+        <h1 className="font-display text-3xl font-semibold">{card.title}</h1>
         <div className="flex flex-wrap gap-2">
-          <span className="chip bg-ground text-ink">{t(`phase.${card.phase}`)}</span>
-          <span className="chip bg-ground text-ink">{t(`category.${card.category}`)}</span>
-          <span className={`chip ${card.priority === "hoog" ? "bg-brick-tint text-brick" : "bg-ground text-ink"}`}>{t(`priority.${card.priority}`)}</span>
-          <span className="chip bg-canal-tint text-canal">{t(`info.${card.info_status}`)}</span>
+          <span className="chip bg-ink/5 text-ink">{t(`phase.${card.phase}`)}</span>
+          <span className="chip bg-ink/5 text-ink">{t(`category.${card.category}`)}</span>
+          <span className={`chip ${card.priority === "hoog" ? "bg-primary-tint text-primary" : "bg-ink/5 text-ink"}`}>{t(`priority.${card.priority}`)}</span>
+          <span className="chip bg-secondary-tint text-secondary">{t(`info.${card.info_status}`)}</span>
         </div>
         {card.description ? <p className="max-w-3xl whitespace-pre-line text-[15px]">{card.description}</p> : null}
       </div>
 
       <FormMessage ok={sp.saved ? tc("saved") : null} error={sp.dep_error ? t(sp.dep_error === "loop" ? "depLoop" : "depError") : null} />
       {card.blockedBy.length && card.status !== "gereed" ? (
-        <p role="status" className="rounded-xl bg-brick-tint px-4 py-3 text-[15px]"><strong>{t("blocked")}:</strong> {t("waitsFor", { list: card.blockedBy.join(", ") })}</p>
+        <p role="status" className="rounded-xl bg-primary-tint px-4 py-3 text-[15px]"><strong>{t("blocked")}:</strong> {t("waitsFor", { list: card.blockedBy.join(", ") })}</p>
       ) : null}
-      {card.dateConflict ? <p role="status" className="rounded-xl bg-brick-tint px-4 py-3 text-[15px]">{t("dateConflict")}</p> : null}
+      {card.dateConflict ? <p role="status" className="rounded-xl bg-primary-tint px-4 py-3 text-[15px]">{t("dateConflict")}</p> : null}
 
       <form action={setProjectStatus} className="flex flex-wrap gap-2" aria-label={t("statusLabel")}>
         <input type="hidden" name="id" value={card.id} />
         {RENO_STATUSES.map((s) => (
-          <button key={s} name="status" value={s} aria-pressed={card.status === s} className={`chip min-h-9 px-3 text-sm ${card.status === s ? "bg-brick text-on-brick" : "border border-line bg-surface text-ink hover:border-brick"}`}>
+          <button key={s} name="status" value={s} aria-pressed={card.status === s} className={`chip min-h-9 px-3 text-sm ${card.status === s ? "bg-primary text-on-primary" : "border border-line bg-surface text-ink hover:border-primary"}`}>
             {t(`status.${s}`)}
           </button>
         ))}
@@ -83,7 +83,7 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
             <div className="flex justify-between gap-3"><dt className="text-muted">{t("owner")}</dt><dd>{card.ownerName ?? "-"}</dd></div>
             <div className="flex justify-between gap-3">
               <dt className="text-muted">{t("vendor")}</dt>
-              <dd>{vendor ? <Link href={`/verbouwing/leveranciers/${vendor.id}`} className="text-brick hover:underline">{vendor.name}</Link> : "-"}</dd>
+              <dd>{vendor ? <Link href={`/verbouwing/leveranciers/${vendor.id}`} className="text-primary hover:underline">{vendor.name}</Link> : "-"}</dd>
             </div>
             <div className="pt-1 text-muted">{card.targets.join(", ")}</div>
           </dl>
@@ -119,14 +119,14 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="card space-y-3 p-5">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-serif text-xl font-semibold">{t("subItems")}</h2>
+            <h2 className="font-display text-xl font-semibold">{t("subItems")}</h2>
             {children.length ? <span className="text-sm text-muted">{t("subProgress", { done: card.childDone, total: card.childCount })}</span> : null}
           </div>
           <ul className="divide-y divide-line">
             {children.map((c) => (
               <li key={c.id} className="flex items-center justify-between gap-3 py-2.5">
-                <Link href={`/verbouwing/${c.id}`} className="min-w-0 truncate font-semibold hover:text-brick">{c.title}</Link>
-                <span className={`chip shrink-0 ${c.status === "gereed" ? "bg-canal text-surface" : "bg-ground text-ink"}`}>{t(`status.${c.status}`)}</span>
+                <Link href={`/verbouwing/${c.id}`} className="min-w-0 truncate font-semibold hover:text-primary">{c.title}</Link>
+                <span className={`chip shrink-0 ${c.status === "gereed" ? "bg-secondary text-on-primary" : "bg-ink/5 text-ink"}`}>{t(`status.${c.status}`)}</span>
               </li>
             ))}
           </ul>
@@ -140,17 +140,17 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
             <input id="sub-title" name="title" className="field" placeholder={t("subItemTitle")} required maxLength={160} />
             <SubmitButton>{t("add")}</SubmitButton>
           </form>
-          <Link href={`/verbouwing/nieuw?parent=${card.id}`} className="text-sm font-semibold text-brick hover:underline">{t("subItemFull")}</Link>
+          <Link href={`/verbouwing/nieuw?parent=${card.id}`} className="text-sm font-semibold text-primary hover:underline">{t("subItemFull")}</Link>
         </section>
 
         <section className="card space-y-3 p-5">
-          <h2 className="font-serif text-xl font-semibold">{t("dependencies")}</h2>
+          <h2 className="font-display text-xl font-semibold">{t("dependencies")}</h2>
           <p className="text-sm text-muted">{t("dependsOnHint")}</p>
           <ul className="divide-y divide-line">
             {dependsOn.map((d) => (
               <li key={d.id} className="flex items-center justify-between gap-3 py-2.5">
                 <span className="min-w-0">
-                  <Link href={`/verbouwing/${d.id}`} className="block truncate font-semibold hover:text-brick">{d.title}</Link>
+                  <Link href={`/verbouwing/${d.id}`} className="block truncate font-semibold hover:text-primary">{d.title}</Link>
                   <span className="text-sm text-muted">{t(`status.${d.status}`)}{d.end_date ? ` · ${t("endsOn", { date: formatDate(d.end_date, locale) })}` : ""}</span>
                 </span>
                 <form action={removeDependency}>
@@ -177,7 +177,7 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
               <h3 className="mt-2 text-sm font-semibold uppercase tracking-wide text-muted">{t("blocks")}</h3>
               <ul className="mt-1 space-y-1">
                 {blocks.map((b) => (
-                  <li key={b.id}><Link href={`/verbouwing/${b.id}`} className="text-[15px] hover:text-brick">{b.title}</Link></li>
+                  <li key={b.id}><Link href={`/verbouwing/${b.id}`} className="text-[15px] hover:text-primary">{b.title}</Link></li>
                 ))}
               </ul>
             </div>
@@ -188,7 +188,7 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
       <MoodBoard kind="project" targetId={card.id} back={`/verbouwing/${card.id}`} />
 
       <section className="card space-y-3 p-5">
-        <h2 className="font-serif text-xl font-semibold">{t("subsidies")}</h2>
+        <h2 className="font-display text-xl font-semibold">{t("subsidies")}</h2>
         {subsidies && subsidies.length ? (
           <ul className="divide-y divide-line">
             {subsidies.map((s) => (
@@ -216,7 +216,7 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
           <p className="text-sm text-muted">{t("noSubsidies")}</p>
         )}
         <details>
-          <summary className="cursor-pointer text-sm font-semibold text-brick">{t("addSubsidy")}</summary>
+          <summary className="cursor-pointer text-sm font-semibold text-primary">{t("addSubsidy")}</summary>
           <form action={addSubsidy} className="mt-3 grid gap-3 sm:grid-cols-3">
             <input type="hidden" name="project_id" value={card.id} />
             <div className="sm:col-span-3">
@@ -234,7 +234,7 @@ export default async function ProjectPage({ params, searchParams }: { params: Pr
       </section>
 
       <details className="space-y-4" open={sp.edit === "1"}>
-        <summary className="cursor-pointer font-serif text-xl font-semibold">{tc("edit")}</summary>
+        <summary className="cursor-pointer font-display text-xl font-semibold">{tc("edit")}</summary>
         <div className="mt-4">
           <ProjectForm project={card} targetIds={card.targetIds} parentOptions={parentOptions} />
         </div>

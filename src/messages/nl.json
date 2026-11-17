@@ -231,7 +231,13 @@
     "shortcuts": "Snelkoppelingen",
     "labelsLink": "Etiketten",
     "vendorsLink": "Leveranciers",
-    "roomsLink": "Ruimtes Nieuwe Rijn 98"
+    "roomsLink": "Ruimtes Nieuwe Rijn 98",
+    "theme": "Weergave",
+    "themes": {
+      "system": "Volg apparaat",
+      "light": "Licht",
+      "dark": "Donker"
+    }
   },
   "reno": {
     "title": "Verbouwing Nieuwe Rijn 98",

@@ -1,62 +1,131 @@
 @import "tailwindcss";
 
-/* Palette B "Grachtenpand" (PRD v1.0): brick red accent, canal green status,
-   zinc lines, warm lime-white background. */
+/* LayeredCake brand (November 2026): honey, tangerine, raspberry, plum.
+   Raspberry carries actions, plum carries status and progress; honey and
+   tangerine are accents only (too light for white text). Surfaces are
+   frosted glass over a warm gradient. */
+/* Theme: follows the device unless the user picked light or dark (data-theme on <html>). */
 :root {
-  --ground: #f6f0e7;
-  --surface: #fffdf9;
-  --ink: #2a2421;
-  --muted: #675d56;
-  --line: #ddd3c6;
-  --brick: #9a3b28;
-  --brick-strong: #7f2f1f;
-  --brick-tint: #f4e2db;
-  --canal: #2f5d50;
-  --canal-tint: #dde8e3;
-  --zinc: #8a9097;
-  --danger: #a3261b;
-  --on-brick: #ffffff;
+  color-scheme: light;
+  --honey: #f4c34b;
+  --tangerine: #ed8e41;
+  --raspberry: #c23b4b;
+  --plum: #932b49;
+  --plum-deep: #671343;
+
+  --ground: #fff6ee;
+  --ink: #2b1520;
+  --muted: #6b5160;
+  --line: rgb(147 43 73 / 0.14);
+
+  --surface: rgb(255 255 255 / 0.62);
+  --surface-strong: rgb(255 255 255 / 0.86);
+  --glass-border: rgb(255 255 255 / 0.7);
+  --glass-shadow: 0 10px 30px -14px rgb(103 19 67 / 0.28), 0 1px 0 0 rgb(255 255 255 / 0.6) inset;
+
+  --primary: var(--raspberry);
+  --primary-strong: #a8303d;
+  --primary-tint: rgb(194 59 75 / 0.12);
+  --on-primary: #ffffff;
+  --secondary: var(--plum);
+  --secondary-tint: rgb(147 43 73 / 0.12);
+  --quiet: #a48e98;
+  --danger: #b4232f;
+
+  --glow-1: rgb(244 195 75 / 0.5);
+  --glow-2: rgb(237 142 65 / 0.42);
+  --glow-3: rgb(194 59 75 / 0.28);
+  --glow-4: rgb(147 43 73 / 0.3);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #1c0d16;
+  --ink: #fbeff3;
+  --muted: #cdb2be;
+  --line: rgb(255 255 255 / 0.12);
+
+  --surface: rgb(255 255 255 / 0.07);
+  --surface-strong: rgb(40 20 32 / 0.92);
+  --glass-border: rgb(255 255 255 / 0.12);
+  --glass-shadow: 0 12px 34px -16px rgb(0 0 0 / 0.6), 0 1px 0 0 rgb(255 255 255 / 0.08) inset;
+
+  --primary: #f4848f;
+  --primary-strong: #f79ca5;
+  --primary-tint: rgb(244 132 143 / 0.16);
+  --on-primary: #1c0d16;
+  --secondary: #e58cb0;
+  --secondary-tint: rgb(229 140 176 / 0.16);
+  --quiet: #8f7884;
+  --danger: #ff8a8a;
+
+  --glow-1: rgb(244 195 75 / 0.2);
+  --glow-2: rgb(237 142 65 / 0.2);
+  --glow-3: rgb(194 59 75 / 0.3);
+  --glow-4: rgb(147 43 73 / 0.45);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --ground: #1c1816;
-    --surface: #26211e;
-    --ink: #f3ede6;
-    --muted: #b8aea5;
-    --line: #3d3530;
-    --brick: #e08a73;
-    --brick-strong: #eda08c;
-    --brick-tint: #3e2a24;
-    --canal: #8cc2b1;
-    --canal-tint: #23342f;
-    --zinc: #9aa0a6;
-    --danger: #f08a80;
-    --on-brick: #1c1816;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #1c0d16;
+    --ink: #fbeff3;
+    --muted: #cdb2be;
+    --line: rgb(255 255 255 / 0.12);
+
+    --surface: rgb(255 255 255 / 0.07);
+    --surface-strong: rgb(40 20 32 / 0.92);
+    --glass-border: rgb(255 255 255 / 0.12);
+    --glass-shadow: 0 12px 34px -16px rgb(0 0 0 / 0.6), 0 1px 0 0 rgb(255 255 255 / 0.08) inset;
+
+    --primary: #f4848f;
+    --primary-strong: #f79ca5;
+    --primary-tint: rgb(244 132 143 / 0.16);
+    --on-primary: #1c0d16;
+    --secondary: #e58cb0;
+    --secondary-tint: rgb(229 140 176 / 0.16);
+    --quiet: #8f7884;
+    --danger: #ff8a8a;
+
+    --glow-1: rgb(244 195 75 / 0.2);
+    --glow-2: rgb(237 142 65 / 0.2);
+    --glow-3: rgb(194 59 75 / 0.3);
+    --glow-4: rgb(147 43 73 / 0.45);
   }
 }
 
 @theme inline {
   --color-ground: var(--ground);
   --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
-  --color-brick: var(--brick);
-  --color-brick-strong: var(--brick-strong);
-  --color-brick-tint: var(--brick-tint);
-  --color-canal: var(--canal);
-  --color-canal-tint: var(--canal-tint);
-  --color-zinc: var(--zinc);
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-tint: var(--primary-tint);
+  --color-on-primary: var(--on-primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-tint: var(--secondary-tint);
+  --color-honey: var(--honey);
+  --color-tangerine: var(--tangerine);
+  --color-plum-deep: var(--plum-deep);
+  --color-quiet: var(--quiet);
   --color-danger: var(--danger);
-  --color-on-brick: var(--on-brick);
   --font-sans: "Inter Variable", system-ui, sans-serif;
-  --font-serif: "Fraunces Variable", Georgia, serif;
+  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", system-ui, sans-serif;
 }
 
 html {
-  background: var(--ground);
   color: var(--ink);
+  background-color: var(--ground);
+  background-image:
+    radial-gradient(60rem 40rem at -10% -10%, var(--glow-1), transparent 60%),
+    radial-gradient(50rem 36rem at 110% 0%, var(--glow-2), transparent 60%),
+    radial-gradient(48rem 40rem at 100% 105%, var(--glow-4), transparent 60%),
+    radial-gradient(44rem 34rem at -5% 100%, var(--glow-3), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100%;
 }
 
 body {
@@ -64,25 +133,49 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.font-display {
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: rgb(244 195 75 / 0.45);
+}
+
+/* Glass surfaces */
+@utility glass {
+  background-color: var(--surface);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+@utility card {
+  @apply glass rounded-2xl;
+}
+
 /* Shared form controls */
 @utility field {
-  @apply w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-[15px] text-ink outline-none focus:border-brick focus:ring-2 focus:ring-brick/25;
+  @apply w-full rounded-xl border border-line bg-surface-strong px-3 py-2.5 text-[15px] text-ink outline-none transition-shadow placeholder:text-muted/80 focus:border-primary focus:ring-4 focus:ring-primary/15;
 }
 @utility label {
   @apply mb-1 block text-sm font-medium text-ink;
 }
 @utility btn {
-  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-[15px] font-semibold transition-colors disabled:opacity-60;
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-[15px] font-semibold transition-all disabled:opacity-60;
 }
 @utility btn-primary {
-  @apply btn bg-brick text-on-brick hover:bg-brick-strong;
+  @apply btn bg-primary text-on-primary shadow-[0_8px_20px_-10px_var(--primary)] hover:bg-primary-strong active:translate-y-px;
 }
 @utility btn-secondary {
-  @apply btn border border-line bg-surface text-ink hover:border-brick;
-}
-@utility card {
-  @apply rounded-2xl border border-line bg-surface;
+  @apply btn glass text-ink hover:border-primary/50;
 }
 @utility chip {
   @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --surface: var(--surface-strong);
+  }
 }

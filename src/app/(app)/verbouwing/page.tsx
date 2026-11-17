@@ -68,7 +68,7 @@ export default async function RenovationBoard({ searchParams }: { searchParams: 
     <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-serif text-3xl font-semibold">{t("title")}</h1>
+          <h1 className="font-display text-3xl font-semibold">{t("title")}</h1>
           <p className="mt-1 text-[15px] text-muted">
             {t("itemsCount", { count: shown.length })}
             {totalEstimate ? ` · ${t("estimate")} ${formatEur(totalEstimate, locale)}` : ""}
@@ -83,13 +83,13 @@ export default async function RenovationBoard({ searchParams }: { searchParams: 
         </div>
       </div>
 
-      <nav aria-label={t("views")} className="inline-flex rounded-xl border border-line bg-surface p-1">
+      <nav aria-label={t("views")} className="glass inline-flex rounded-2xl p-1">
         {(["kanban", "lijst", "tijdlijn"] as const).map((v) => (
           <Link
             key={v}
             href={viewHref(v)}
             aria-current={view === v ? "page" : undefined}
-            className={`rounded-lg px-4 py-2 text-[15px] font-semibold ${view === v ? "bg-brick text-on-brick" : "text-ink hover:bg-ground"}`}
+            className={`rounded-lg px-4 py-2 text-[15px] font-semibold ${view === v ? "bg-primary text-on-primary" : "text-ink hover:bg-ink/5"}`}
           >
             {t(`view.${v}`)}
           </Link>
@@ -138,7 +138,7 @@ export default async function RenovationBoard({ searchParams }: { searchParams: 
             </select>
           </div>
           <label className="flex items-center gap-2 text-[15px] sm:col-span-2">
-            <input type="checkbox" name="level" value="top" defaultChecked={sp.level === "top"} className="h-5 w-5 accent-[var(--brick)]" />
+            <input type="checkbox" name="level" value="top" defaultChecked={sp.level === "top"} className="h-5 w-5 accent-[var(--primary)]" />
             {t("topLevelOnly")}
           </label>
           <div className="flex gap-2 sm:col-span-1 lg:col-span-4 lg:justify-end">

@@ -34,10 +34,10 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="space-y-6">
-      <Link href={`/kamers/${item.room_id}`} className="text-sm text-brick">← {roomLabel(room, locale)}</Link>
-      <h1 className="font-serif text-3xl font-semibold">{item.name}</h1>
+      <Link href={`/kamers/${item.room_id}`} className="text-sm text-primary">← {roomLabel(room, locale)}</Link>
+      <h1 className="font-display text-3xl font-semibold">{item.name}</h1>
 
-      <div className={`rounded-xl px-4 py-3 text-[15px] ${fit.kind === "fits" ? "bg-canal-tint" : fit.kind === "unknown" ? "bg-surface border border-line" : "bg-brick-tint"}`}>
+      <div className={`rounded-xl px-4 py-3 text-[15px] ${fit.kind === "fits" ? "bg-secondary-tint" : fit.kind === "unknown" ? "bg-surface border border-line" : "bg-primary-tint"}`}>
         <strong>{tfit("title")}:</strong> {tfit(fit.kind, { box: defaultBoxType?.name ?? "" })}
       </div>
 
@@ -104,7 +104,7 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
             <input id="value_eur" name="value_eur" inputMode="decimal" className="field" defaultValue={num(item.value_eur)} />
           </div>
         </div>
-        <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="fragile" defaultChecked={item.fragile} className="h-5 w-5 accent-[var(--brick)]" />{ti("fragile")}</label>
+        <label className="flex items-center gap-2 text-[15px]"><input type="checkbox" name="fragile" defaultChecked={item.fragile} className="h-5 w-5 accent-[var(--primary)]" />{ti("fragile")}</label>
         <div>
           <label className="label" htmlFor="notes">{tc("notes")}</label>
           <textarea id="notes" name="notes" rows={2} className="field" defaultValue={item.notes ?? ""} />

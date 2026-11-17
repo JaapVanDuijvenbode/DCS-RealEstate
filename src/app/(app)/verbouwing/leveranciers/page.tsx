@@ -11,8 +11,8 @@ export default async function VendorsPage() {
 
   return (
     <div className="space-y-6">
-      <Link href="/verbouwing" className="text-sm text-brick">← {t("title")}</Link>
-      <h1 className="font-serif text-3xl font-semibold">{t("vendors")}</h1>
+      <Link href="/verbouwing" className="text-sm text-primary">← {t("title")}</Link>
+      <h1 className="font-display text-3xl font-semibold">{t("vendors")}</h1>
       {vendors.length === 0 ? (
         <p className="text-muted">{t("noVendors")}</p>
       ) : (
@@ -22,7 +22,7 @@ export default async function VendorsPage() {
             const total = projects.reduce((n, c) => n + Number(bestCost(c) ?? 0), 0);
             return (
               <li key={v.id}>
-                <Link href={`/verbouwing/leveranciers/${v.id}`} className="card block h-full p-4 hover:border-brick">
+                <Link href={`/verbouwing/leveranciers/${v.id}`} className="card block h-full p-4 hover:border-primary">
                   <span className="block text-[16px] font-semibold">{v.name}</span>
                   <span className="block text-sm text-muted">
                     {v.trade ? t(`trade.${v.trade}`) : ""}
@@ -40,7 +40,7 @@ export default async function VendorsPage() {
         </ul>
       )}
       <details className="space-y-3" open={vendors.length === 0}>
-        <summary className="cursor-pointer font-serif text-xl font-semibold">+ {t("addVendor")}</summary>
+        <summary className="cursor-pointer font-display text-xl font-semibold">+ {t("addVendor")}</summary>
         <div className="mt-3"><VendorForm /></div>
       </details>
     </div>
